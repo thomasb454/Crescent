@@ -16,6 +16,12 @@ public class PlayerJumpEvent extends Event {
 	private final Player player;
 	private final double distance;
 
+	/**
+	 * @param player
+	 *            The player that has jumped.
+	 * @param distance
+	 *            The distance that the player has jumped upwards.
+	 */
 	public PlayerJumpEvent(Player player, double distance) {
 		this.player = player;
 		this.distance = distance;

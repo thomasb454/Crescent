@@ -16,6 +16,11 @@ public class InformationGatherer {
 
 	// Check to see if a detection has similar data to a previously made
 	// detection.
+	/**
+	 * @param detection
+	 *            The detection that the player has triggered.
+	 * @return A previous detection most like the one that has been triggered.
+	 */
 	public Detection getMostPerfectMatch(Detection detection) {
 		final CheckType checkType = detection.getCheckType();
 
@@ -23,7 +28,7 @@ public class InformationGatherer {
 
 		for (CheckType type : previousChecks.keySet()) {
 			if (checkType == type) {
-				
+
 			}
 		}
 	}

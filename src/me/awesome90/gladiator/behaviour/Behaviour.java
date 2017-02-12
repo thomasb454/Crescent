@@ -9,15 +9,19 @@ public class Behaviour {
 
 	private final Profile profile;
 
+	/**
+	 * @param profile
+	 *            The profile of the player whose behaviour is being analysed.
+	 */
 	public Behaviour(Profile profile) {
 		this.profile = profile;
 	}
 
-	public boolean isOnLiquidBlock() {
+	public final boolean isOnLiquidBlock() {
 		return getBlockUnderPlayer().isLiquid();
 	}
 
-	public Block getBlockUnderPlayer() {
+	public final Block getBlockUnderPlayer() {
 		return profile.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN);
 	}
 

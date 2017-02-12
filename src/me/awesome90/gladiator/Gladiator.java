@@ -6,7 +6,9 @@ public class Gladiator extends JavaPlugin {
 
 	private static Gladiator instance;
 
-	// Return instance of the plugin.
+	/**
+	 * @return The instance of the plugin.
+	 */
 	public static Gladiator getInstance() {
 		return instance;
 	}
