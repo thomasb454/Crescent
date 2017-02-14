@@ -28,6 +28,18 @@ public abstract class CheckVersion implements CheckApproach {
 	 */
 	protected ArrayList<Detection> previous;
 
+	/**
+	 * The total number of times that this particular CheckVersion has been
+	 * called.
+	 */
+	private long totalCalls;
+
+	/**
+	 * The total number of times that this CheckVersion has returned with belief
+	 * that the player could be cheating.
+	 */
+	private long improperCalls;
+
 	public CheckVersion(Profile profile, CheckType type, String checkVersion) {
 		this.profile = profile;
 		this.type = type;
@@ -46,12 +58,24 @@ public abstract class CheckVersion implements CheckApproach {
 	 * @param info
 	 *            Any additional information to be sent to users.
 	 */
-	public void callback(boolean suspicious, double certainty, String info) {
+	public void callback(boolean suspicious, String info) {
 		if (suspicious) {
-			Detection detection = new Detection(profile, type, checkVersion, certainty);
+			final Detection detection = new Detection(profile, type, checkVersion, checkCurrentCertainty());
 			// Add the detection to the list for this CheckType.
-			detection.add();
+			previous.add(detection);
+
+			improperCalls++;
 		}
+
+		totalCalls++;
+	}
+
+	/**
+	 * @return The overall certainty of a player cheating (taking into account
+	 *         previous checks).
+	 */
+	public double calculateOverallCertainty() {
+		return (((improperCalls / totalCalls) * 100.0) / type.getCheatConsider()) * 100.0;
 	}
 
 	public CheckType getCheckType() {

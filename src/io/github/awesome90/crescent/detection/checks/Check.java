@@ -3,12 +3,11 @@ package io.github.awesome90.crescent.detection.checks;
 import java.util.ArrayList;
 
 import io.github.awesome90.crescent.detection.CheckType;
-import io.github.awesome90.crescent.detection.Detection;
 
 public abstract class Check {
 
 	protected final CheckType type;
-	protected ArrayList<Detection> previous;
+	protected ArrayList<CheckVersion> versions;
 
 	/**
 	 * @param type
@@ -17,19 +16,29 @@ public abstract class Check {
 	 */
 	public Check(CheckType type) {
 		this.type = type;
-		this.previous = new ArrayList<Detection>();
+		this.versions = new ArrayList<CheckVersion>();
+	}
+
+	public final double getCertainty() {
+		double total = 0.0;
+		for (CheckVersion version : versions) {
+			total += version.calculateOverallCertainty();
+		}
+
+		return (total / versions.size()) * 100.0;
 	}
 
 	/**
-	 * @param detection
-	 *            The Detection object that should be added to the player's
-	 *            detection list for this specific check.
+	 * Add a specific version of a cheat to check for.
+	 * 
+	 * @param version
+	 *            The CheckVersion you would like to add.
 	 */
-	public void addDetection(Detection detection) {
-		previous.add(detection);
+	public void addVersion(CheckVersion version) {
+		versions.add(version);
 	}
 
-	public CheckType getType() {
+	public final CheckType getType() {
 		return type;
 	}
 

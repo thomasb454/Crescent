@@ -25,13 +25,6 @@ public class Detection {
 		this.certainty = certainty;
 	}
 
-	/**
-	 * Add the detection to the player's detection list for this check type.
-	 */
-	public void add() {
-		profile.getCheck(type).addDetection(this);
-	}
-
 	public CheckType getCheckType() {
 		return type;
 	}
