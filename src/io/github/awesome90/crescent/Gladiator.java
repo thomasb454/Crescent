@@ -1,4 +1,4 @@
-package me.awesome90.gladiator;
+package io.github.awesome90.crescent;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

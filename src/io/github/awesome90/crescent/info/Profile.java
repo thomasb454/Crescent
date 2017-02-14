@@ -1,4 +1,4 @@
-package me.awesome90.gladiator.info;
+package io.github.awesome90.crescent.info;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -6,10 +6,10 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import me.awesome90.gladiator.behaviour.Behaviour;
-import me.awesome90.gladiator.detection.Check;
-import me.awesome90.gladiator.detection.CheckType;
-import me.awesome90.gladiator.detection.Detection;
+import io.github.awesome90.crescent.behaviour.Behaviour;
+import io.github.awesome90.crescent.detection.Check;
+import io.github.awesome90.crescent.detection.CheckType;
+import io.github.awesome90.crescent.detection.Detection;
 
 public class Profile {
 

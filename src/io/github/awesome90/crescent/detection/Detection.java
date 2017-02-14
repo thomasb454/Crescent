@@ -1,6 +1,6 @@
-package me.awesome90.gladiator.detection;
+package io.github.awesome90.crescent.detection;
 
-import me.awesome90.gladiator.info.Profile;
+import io.github.awesome90.crescent.info.Profile;
 
 public class Detection {
 

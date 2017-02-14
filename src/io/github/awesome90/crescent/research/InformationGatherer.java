@@ -1,10 +1,10 @@
-package me.awesome90.gladiator.research;
+package io.github.awesome90.crescent.research;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import me.awesome90.gladiator.detection.CheckType;
-import me.awesome90.gladiator.detection.Detection;
+import io.github.awesome90.crescent.detection.CheckType;
+import io.github.awesome90.crescent.detection.Detection;
 
 public class InformationGatherer {
 

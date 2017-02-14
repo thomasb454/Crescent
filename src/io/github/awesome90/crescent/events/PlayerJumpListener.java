@@ -1,4 +1,4 @@
-package me.awesome90.gladiator.events;
+package io.github.awesome90.crescent.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

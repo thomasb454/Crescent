@@ -1,4 +1,4 @@
-package me.awesome90.gladiator.detection;
+package io.github.awesome90.crescent.detection;
 
 import java.util.ArrayList;
 

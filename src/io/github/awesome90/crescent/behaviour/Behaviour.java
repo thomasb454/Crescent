@@ -1,9 +1,9 @@
-package me.awesome90.gladiator.behaviour;
+package io.github.awesome90.crescent.behaviour;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import me.awesome90.gladiator.info.Profile;
+import io.github.awesome90.crescent.info.Profile;
 
 public class Behaviour {
 
