@@ -2,10 +2,14 @@ package io.github.awesome90.crescent.detection.checks;
 
 import java.util.ArrayList;
 
+import org.bukkit.event.Event;
+
 import io.github.awesome90.crescent.detection.CheckType;
+import io.github.awesome90.crescent.info.Profile;
 
 public abstract class Check {
 
+	protected final Profile profile;
 	protected final CheckType type;
 	protected ArrayList<CheckVersion> versions;
 
@@ -14,11 +18,27 @@ public abstract class Check {
 	 *            The type of cheat that this instance of Check attempts to
 	 *            detect.
 	 */
-	public Check(CheckType type) {
+	public Check(Profile profile, CheckType type) {
+		this.profile = profile;
 		this.type = type;
 		this.versions = new ArrayList<CheckVersion>();
 	}
 
+	/**
+	 * @param event
+	 *            The event called that is passed to each CheckVersion to
+	 *            analyse.
+	 */
+	public void call(Event event) {
+		for (CheckVersion version : versions) {
+			version.call(event);
+		}
+	}
+
+	/**
+	 * 
+	 * @return The certainty of this check as a whole.
+	 */
 	public final double getCertainty() {
 		double total = 0.0;
 		for (CheckVersion version : versions) {
@@ -26,6 +46,13 @@ public abstract class Check {
 		}
 
 		return (total / versions.size()) * 100.0;
+	}
+	
+	/**
+	 * @return The profile.
+	 */
+	public final Profile getProfile() {
+		return profile;
 	}
 
 	/**

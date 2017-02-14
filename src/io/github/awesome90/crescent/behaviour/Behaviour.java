@@ -28,6 +28,10 @@ public class Behaviour {
 		return in == Material.WATER || in == Material.STATIONARY_WATER;
 	}
 
+	public int getEPF() {
+		
+	}
+	
 	public final boolean isOnLadder() {
 		return false; // Change this!
 	}
