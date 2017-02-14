@@ -19,6 +19,7 @@ Thank you for showing interest in the project! :)
 Please feel free to submit a pull request! :)
 
 Before you submit a pull request however please make sure that:
+
 - It is your own code.
 - You have written clean and efficient code.
 - You have commented your code to explain what it does.
