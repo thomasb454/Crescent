@@ -1,8 +1,8 @@
-# Gladiator
+# Crescent
 
 This plugin aims to eradicate cheating from servers by making cheating not significantly advantageous enough for players.
 
-Gladiator is still under development but hopes to be ready for use soon.
+Crescent is still under development but hopes to be ready for use soon.
 
 Thank you for showing interest in the project! :)
 
