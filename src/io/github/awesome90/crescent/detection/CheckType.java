@@ -3,7 +3,7 @@ package io.github.awesome90.crescent.detection;
 import io.github.awesome90.crescent.Crescent;
 
 public enum CheckType {
-	WATERWALK("WaterWalk", 10), NOFALL("NoFall", 10), ANTIKNOCKBACK("Antiknockback", 10);
+	WATERWALK("WaterWalk", 10), NOFALL("NoFall", 10), ANTIKNOCKBACK("Antiknockback", 10), SNEAK("Sneak", 10);
 
 	/**
 	 * The user-friendly name of the check.

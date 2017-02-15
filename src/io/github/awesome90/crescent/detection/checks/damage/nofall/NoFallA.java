@@ -55,9 +55,9 @@ public class NoFallA extends CheckVersion {
 
 							totalDisplacedHealth += difference;
 
-							callback(true, "Player took " + difference + " damage instead of expected " + sensibleHealth
-									+ " damage.");
-
+							callback(true);
+						} else {
+							callback(false);
 						}
 					}
 				}, 2L);

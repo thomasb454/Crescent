@@ -47,7 +47,7 @@ public class WaterWalkA extends CheckVersion {
 				if (under == Material.WATER || under == Material.STATIONARY_WATER) {
 					// The player is standing on water.
 					startTime = System.currentTimeMillis();
-					callback(true, "Standing on water.");
+					callback(true);
 					return;
 				}
 			}
@@ -59,6 +59,7 @@ public class WaterWalkA extends CheckVersion {
 			startTime = -1;
 		}
 
+		callback(false);
 	}
 
 	/**

@@ -26,7 +26,7 @@ public class AntiknockbackA extends CheckVersion {
 
 	public AntiknockbackA(Check check) {
 		super(check, "A");
-		this.tooSmall = normal = tooBig = 0;
+		this.tooSmall = normal = tooBig = 1;
 	}
 
 	@Override
@@ -124,14 +124,24 @@ public class AntiknockbackA extends CheckVersion {
 		if (totalXZ < values[0]) {
 			// Player is taking a very little amount of knockback.
 			tooSmall++;
-		} else if (totalXZ > values[0] && totalXZ < values[1]) {
-			// Player is taking a normal amount of knockback.
-			normal++;
 		} else {
-			// Player is taking a large amount of knockback.
-			tooSmall++;
+			if (totalXZ > values[0] && totalXZ < values[1]) {
+
+				// Player is taking a normal amount of knockback.
+				normal++;
+			} else {
+				// Player is taking a large amount of knockback.
+				tooBig++;
+			}
+
+			// The player is not suspicious.
+			callback(false);
+			return;
 		}
 
+		if (checkCurrentCertainty() > 45 && super.totalCalls >= 10) {
+			callback(true);
+		}
 	}
 
 	private int getKnockbackLevel(ItemStack item) {
