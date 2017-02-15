@@ -27,6 +27,11 @@ public abstract class CheckVersion implements CheckApproach {
 	protected final String checkVersion;
 
 	/**
+	 * A description of what this particular check does.
+	 */
+	protected final String description;
+
+	/**
 	 * Previous suspicious activity triggered by the player for this particular
 	 * check.
 	 */
@@ -44,11 +49,12 @@ public abstract class CheckVersion implements CheckApproach {
 	 */
 	protected long improperCalls;
 
-	public CheckVersion(Check check, String checkVersion) {
+	public CheckVersion(Check check, String checkVersion, String description) {
 		this.check = check;
 		this.profile = check.getProfile();
 		this.type = check.getType();
 		this.checkVersion = checkVersion;
+		this.description = description;
 		this.previous = new ArrayList<Detection>();
 	}
 
@@ -79,16 +85,20 @@ public abstract class CheckVersion implements CheckApproach {
 	 * @return The overall certainty of a player cheating (taking into account
 	 *         previous checks).
 	 */
-	public double calculateOverallCertainty() {
+	public final double calculateOverallCertainty() {
 		return (((improperCalls / totalCalls) * 100.0) / type.getCheatConsider()) * 100.0;
 	}
 
-	public CheckType getCheckType() {
+	public final CheckType getCheckType() {
 		return type;
 	}
 
-	public String getCheckVersion() {
+	public final String getCheckVersion() {
 		return checkVersion;
+	}
+
+	public final String getCheckDescription() {
+		return description;
 	}
 
 }

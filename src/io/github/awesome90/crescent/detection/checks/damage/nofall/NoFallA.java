@@ -23,7 +23,7 @@ public class NoFallA extends CheckVersion {
 	private double totalDisplacedHealth;
 
 	public NoFallA(Check check) {
-		super(check, "A");
+		super(check, "A", "Checks the damage that the player took compared to the damage that they should have taken.");
 		this.totalDamage = totalDisplacedHealth = 0.0;
 	}
 

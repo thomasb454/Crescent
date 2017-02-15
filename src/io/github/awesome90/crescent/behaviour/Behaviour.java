@@ -19,6 +19,10 @@ public class Behaviour {
 		this.profile = profile;
 	}
 
+	public final boolean isAscending() {
+		return getPlayer().getVelocity().getY() > 0;
+	}
+
 	public final boolean isDescending() {
 		return getPlayer().getVelocity().getY() < 0;
 	}

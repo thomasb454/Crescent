@@ -32,6 +32,9 @@ public class Crescent extends JavaPlugin {
 			this.getConfig().set("cheatConsider." + type.getName(), type.getNormalCheatConsider());
 		}
 
+		// Fly check values.
+		this.getConfig().set("fly.a.ascendFlyCertain", 1500);
+
 		// Antiknockback check A default values.
 		this.getConfig().set("antiknockback.nonSprintNormal", "2.1-3.1");
 		this.getConfig().set("antiknockback.sprintNormal", "4.9-6.8");
