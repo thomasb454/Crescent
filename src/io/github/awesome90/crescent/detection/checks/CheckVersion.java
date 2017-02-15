@@ -2,8 +2,6 @@ package io.github.awesome90.crescent.detection.checks;
 
 import java.util.ArrayList;
 
-import org.bukkit.event.Event;
-
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.Detection;
 import io.github.awesome90.crescent.info.Profile;
@@ -46,9 +44,10 @@ public abstract class CheckVersion implements CheckApproach {
 	 */
 	private long improperCalls;
 
-	public CheckVersion(CheckType type, String checkVersion) {
-		this.profile = check.;
-		this.type = type;
+	public CheckVersion(Check check, String checkVersion) {
+		this.check = check;
+		this.profile = check.getProfile();
+		this.type = check.getType();
 		this.checkVersion = checkVersion;
 		this.previous = new ArrayList<Detection>();
 	}

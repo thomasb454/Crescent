@@ -1,23 +1,31 @@
-package io.github.awesome90.crescent.detection.checks.movement;
+package io.github.awesome90.crescent.detection.checks.movement.waterwalk;
 
 import org.bukkit.Material;
+import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import io.github.awesome90.crescent.behaviour.Behaviour;
-import io.github.awesome90.crescent.detection.CheckType;
+import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
-import io.github.awesome90.crescent.info.Profile;
 
-public class WaterwalkA extends CheckVersion {
+public class WaterWalkA extends CheckVersion {
 
 	/**
 	 * The time that the player has been standing on water since.
 	 */
 	private long startTime;
 
-	public WaterwalkA(Profile profile) {
-		super(profile, CheckType.WATERWALK, "A");
+	public WaterWalkA(Check check) {
+		super(check, "A");
 
 		this.startTime = -1;
+	}
+
+	@Override
+	public void call(Event event) {
+		if (event instanceof PlayerMoveEvent) {
+			check();
+		}
 	}
 
 	@Override
@@ -61,5 +69,4 @@ public class WaterwalkA extends CheckVersion {
 	public double checkCurrentCertainty() {
 		return (((System.currentTimeMillis() - startTime) / 1000.0) / 60.0) * 100.0;
 	}
-
 }
