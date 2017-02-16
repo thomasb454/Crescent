@@ -28,6 +28,7 @@ public class FlyA extends CheckVersion {
 				} else if (System.currentTimeMillis() - startAscending >= Crescent.getInstance().getConfig()
 						.getInt("fly.a.ascendFlyCertain")) {
 					callback(true);
+					startAscending = -1;
 				}
 
 				return;

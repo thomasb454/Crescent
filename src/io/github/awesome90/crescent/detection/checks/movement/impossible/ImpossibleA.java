@@ -11,7 +11,7 @@ import io.github.awesome90.crescent.detection.checks.CheckVersion;
 public class ImpossibleA extends CheckVersion {
 
 	public ImpossibleA(Check check) {
-		super(check, "A");
+		super(check, "A", "Checks whether the player is completing impossible actions.");
 	}
 
 	@Override

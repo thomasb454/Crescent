@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
@@ -16,7 +17,7 @@ public class WaterWalkA extends CheckVersion {
 	private long startTime;
 
 	public WaterWalkA(Check check) {
-		super(check, "A");
+		super(check, "A", "Checks whether the player is walking on water");
 
 		this.startTime = -1;
 	}
@@ -46,17 +47,18 @@ public class WaterWalkA extends CheckVersion {
 
 				if (under == Material.WATER || under == Material.STATIONARY_WATER) {
 					// The player is standing on water.
-					startTime = System.currentTimeMillis();
-					callback(true);
-					return;
+					if (startTime == -1) {
+						startTime = System.currentTimeMillis();
+					}
+
+					if (System.currentTimeMillis() - startTime >= Crescent.getInstance().getConfig()
+							.getInt("waterwalk.a.walkTime")) {
+						callback(true);
+						startTime = -1;
+						return;
+					}
 				}
 			}
-		}
-
-		if (startTime != -1) {
-			// Since the player is no longer standing on water, we must reset
-			// this value.
-			startTime = -1;
 		}
 
 		callback(false);

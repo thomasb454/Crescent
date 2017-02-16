@@ -34,6 +34,12 @@ public class Crescent extends JavaPlugin {
 
 		// Fly check values.
 		this.getConfig().set("fly.a.ascendFlyCertain", 1500);
+		this.getConfig().set("fly.b.countInAir", 20);
+		this.getConfig().set("fly.b.flyCertain", 1500);
+
+		this.getConfig().set("waterwalk.a.walkTime", 1000);
+
+		this.getConfig().set("fastbow.a.allowedMinimumDifference", 600);
 
 		// Antiknockback check A default values.
 		this.getConfig().set("antiknockback.nonSprintNormal", "2.1-3.1");
