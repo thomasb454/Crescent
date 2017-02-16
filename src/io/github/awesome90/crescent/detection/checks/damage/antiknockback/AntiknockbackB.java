@@ -1,6 +1,8 @@
 package io.github.awesome90.crescent.detection.checks.damage.antiknockback;
 
+import org.bukkit.entity.Arrow;
 import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
@@ -13,22 +15,24 @@ public class AntiknockbackB extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
-		// TODO Auto-generated method stub
-		
+		if (event instanceof EntityDamageByEntityEvent) {
+			EntityDamageByEntityEvent edbye = (EntityDamageByEntityEvent) event;
+
+			if (edbye.getDamager() instanceof Arrow) {
+
+			}
+
+		}
 	}
 
 	@Override
 	public void check() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public double checkCurrentCertainty() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	
 
 }
