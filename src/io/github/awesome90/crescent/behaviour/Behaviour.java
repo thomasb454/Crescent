@@ -11,12 +11,40 @@ public class Behaviour {
 
 	private final Profile profile;
 
+	private boolean jumping;
+
 	/**
 	 * @param profile
 	 *            The profile of the player whose behaviour is being analysed.
 	 */
 	public Behaviour(Profile profile) {
 		this.profile = profile;
+		this.jumping = false;
+	}
+
+	public final TransportMethod getCurrentTransportMethod() {
+		final Player player = getPlayer();
+
+		if (player.isSprinting() && jumping) {
+			return TransportMethod.SPRINT_JUMPING;
+		} else if (player.isSprinting()) {
+			return TransportMethod.SPRINTING;
+		} else if (player.isSprinting() && player.isFlying()) {
+			return TransportMethod.FLYING_SPRINTING;
+		} else if (player.isFlying()) {
+			return TransportMethod.FLYING;
+		} else {
+			return TransportMethod.WALKING;
+		}
+
+	}
+
+	public void setJumping(boolean jumping) {
+		this.jumping = jumping;
+	}
+
+	public final boolean isJumping() {
+		return jumping;
 	}
 
 	public final boolean isAscending() {

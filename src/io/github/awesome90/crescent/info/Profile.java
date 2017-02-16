@@ -12,6 +12,23 @@ import io.github.awesome90.crescent.detection.checks.Check;
 
 public class Profile {
 
+	private static ArrayList<Profile> profiles = new ArrayList<Profile>();
+
+	public static Profile getProfile(UUID uuid) {
+		for (Profile profile : profiles) {
+			if (profile.getUUID() == uuid) {
+				return profile;
+			}
+		}
+
+		// The player does not have a profile, create a new one for them.
+
+		Profile profile = new Profile(uuid);
+		profiles.add(profile);
+
+		return profile;
+	}
+
 	private final UUID uuid;
 	private final Behaviour behaviour;
 	private ArrayList<Check> checks;
@@ -22,6 +39,10 @@ public class Profile {
 		// Create an ArrayList containing all the checks. This should only be
 		// able to hold the maximum size of checks.
 		this.checks = new ArrayList<Check>(CheckType.values().length);
+	}
+
+	public UUID getUUID() {
+		return uuid;
 	}
 
 	public Behaviour getBehaviour() {

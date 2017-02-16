@@ -29,7 +29,7 @@ public class Crescent extends JavaPlugin {
 	private void loadConfig() {
 
 		for (CheckType type : CheckType.values()) {
-			this.getConfig().set("cheatConsider." + type.getName(), type.getNormalCheatConsider());
+			this.getConfig().set(type.getName() + ".cheatConsider", type.getNormalCheatConsider());
 		}
 
 		// Fly check values.
@@ -40,6 +40,9 @@ public class Crescent extends JavaPlugin {
 		this.getConfig().set("waterwalk.a.walkTime", 1000);
 
 		this.getConfig().set("fastbow.a.allowedMinimumDifference", 600);
+
+		this.getConfig().set("speed.a.distanceCheck", 10);
+		this.getConfig().set("speed.a.compareDifference", 200);
 
 		// Antiknockback check A default values.
 		this.getConfig().set("antiknockback.nonSprintNormal", "2.1-3.1");

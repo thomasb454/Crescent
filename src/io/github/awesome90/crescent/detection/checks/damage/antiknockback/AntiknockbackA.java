@@ -26,7 +26,7 @@ public class AntiknockbackA extends CheckVersion {
 
 	public AntiknockbackA(Check check) {
 		super(check, "A",
-				"Compares how the player's position compares to average position values after specific types of hits.");
+				"Compares how the player's position compares to average position values after specific types of hits (for normal and with swords).");
 		this.tooSmall = normal = tooBig = 1;
 	}
 
