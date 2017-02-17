@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -32,6 +33,9 @@ public class AntiknockbackA extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
+		final Player player = profile.getPlayer();
+		final Location original = player.getLocation();
+
 		if (event instanceof EntityDamageEvent) {
 			final EntityDamageEvent ede = (EntityDamageEvent) event;
 
@@ -51,7 +55,6 @@ public class AntiknockbackA extends CheckVersion {
 					damagerSword = entity.getEquipment().getItemInHand();
 
 					if (entity instanceof Player) {
-						Player player = (Player) ((EntityDamageByEntityEvent) ede).getDamager();
 						damagerSprinting = player.isSprinting();
 					}
 				}
@@ -72,8 +75,6 @@ public class AntiknockbackA extends CheckVersion {
 			final DamageCause cause = ede.getCause();
 
 			if (cause == DamageCause.ENTITY_ATTACK) {
-				final Player player = profile.getPlayer();
-				final Location original = player.getLocation();
 
 				Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), new Runnable() {
 
@@ -88,8 +89,28 @@ public class AntiknockbackA extends CheckVersion {
 
 						checkWithRelevantNumbers(sprinting, sword, diffX + diffZ);
 					}
-				}, 2L);
+				}, 20L);
 			}
+		} else if (event instanceof EntityDamageByEntityEvent) {
+			EntityDamageByEntityEvent edbye = (EntityDamageByEntityEvent) event;
+
+			if (edbye.getDamager() instanceof Arrow) {
+				Arrow arrow = (Arrow) edbye.getDamager();
+
+				int punch = arrow.getKnockbackStrength();
+
+				Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), new Runnable() {
+
+					@Override
+					public void run() {
+						final Location current = player.getLocation();
+
+						final double diffX = Math.abs(current.getX() - original.getX()),
+								diffZ = Math.abs(current.getZ() - original.getZ());
+					}
+				}, 20L);
+			}
+
 		}
 	}
 
@@ -99,7 +120,7 @@ public class AntiknockbackA extends CheckVersion {
 	}
 
 	private void checkWithRelevantNumbers(boolean damagerSprinting, ItemStack damagerSword, double totalXZ) {
-		String key = "antiknockback." + (damagerSprinting ? "sprint" : "nonSprint");
+		String key = "antiknockback.a." + (damagerSprinting ? "sprint" : "nonSprint");
 
 		int knockbackLevel = getKnockbackLevel(damagerSword);
 
@@ -107,9 +128,11 @@ public class AntiknockbackA extends CheckVersion {
 			key += "Knockback";
 			if (knockbackLevel == 1) {
 				key += "I";
-			} else {
+			} else if (knockbackLevel == 2) {
 				// The knockback level must be 2.
 				key += "II";
+			} else {
+				return;
 			}
 		} else {
 			key += "Normal";
