@@ -71,7 +71,8 @@ public abstract class CheckVersion implements CheckApproach {
 	 */
 	public void callback(boolean suspicious) {
 		if (suspicious) {
-			final Detection detection = new Detection(profile, type, checkVersion, checkCurrentCertainty());
+			final Detection detection = new Detection(profile, check, checkVersion, checkCurrentCertainty());
+			detection.alert();
 			// Add the detection to the list for this CheckType.
 			previous.add(detection);
 

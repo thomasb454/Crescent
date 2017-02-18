@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.Check;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 
 public class Profile {
 
@@ -71,6 +72,10 @@ public class Profile {
 
 	public final Player getPlayer() {
 		return Bukkit.getPlayer(uuid);
+	}
+
+	public final int getPing() {
+		return ((EntityPlayer) getPlayer()).ping;
 	}
 
 }

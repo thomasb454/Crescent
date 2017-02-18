@@ -1,11 +1,15 @@
 package io.github.awesome90.crescent.detection;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+
+import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.info.Profile;
 
 public class Detection {
 
 	private final Profile profile;
-	private final CheckType type;
+	private final Check check;
 	private final String checkVersion;
 	private final double certainty;
 	private final long time;
@@ -16,17 +20,24 @@ public class Detection {
 	 * @param type
 	 *            The type of cheat the player has used to set of the detection
 	 */
-	public Detection(Profile profile, CheckType type, String checkVersion, double certainty) {
+	public Detection(Profile profile, Check check, String checkVersion, double certainty) {
 		this.profile = profile;
-		this.type = type;
+		this.check = check;
 		// The time that the detection was triggered.
 		this.time = System.currentTimeMillis();
 		this.checkVersion = checkVersion;
 		this.certainty = certainty;
 	}
 
-	public CheckType getCheckType() {
-		return type;
+	public void alert() {
+		Bukkit.broadcast(
+				ChatColor.RED + profile.getPlayer().getName() + " failed the " + check.getType().getName().toLowerCase()
+						+ checkVersion + " check. (" + check.getCertainty() + "% ping: " + profile.getPing() + ")",
+				"crescent.alert");
+	}
+
+	public Check getCheck() {
+		return check;
 	}
 
 	public String getCheckVersion() {
@@ -38,8 +49,6 @@ public class Detection {
 	 *         other detections.
 	 */
 	public double getCertainty() {
-		// This should return the magnitude to which the info of this detection
-		// is similar to the info of previous known cheat info.
 		return certainty;
 	}
 
