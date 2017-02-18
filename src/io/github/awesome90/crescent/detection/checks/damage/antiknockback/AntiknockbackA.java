@@ -3,6 +3,7 @@ package io.github.awesome90.crescent.detection.checks.damage.antiknockback;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
@@ -108,7 +109,7 @@ public class AntiknockbackA extends CheckVersion {
 						final double diffX = Math.abs(current.getX() - original.getX()),
 								diffZ = Math.abs(current.getZ() - original.getZ());
 					}
-				}, 20L);
+				}, 5L);
 			}
 
 		}
@@ -145,12 +146,12 @@ public class AntiknockbackA extends CheckVersion {
 		 * values.
 		 */
 
+		Bukkit.broadcastMessage(totalXZ + "");
 		if (totalXZ < values[0]) {
 			// Player is taking a very little amount of knockback.
 			tooSmall++;
 		} else {
-			if (totalXZ > values[0] && totalXZ < values[1]) {
-
+			if (totalXZ >= values[0] && totalXZ <= values[1]) {
 				// Player is taking a normal amount of knockback.
 				normal++;
 			} else {
@@ -163,6 +164,7 @@ public class AntiknockbackA extends CheckVersion {
 			return;
 		}
 
+		Bukkit.broadcastMessage(checkCurrentCertainty() + "");
 		if (checkCurrentCertainty() > 45 && super.totalCalls >= 10) {
 			callback(true);
 		}
@@ -178,8 +180,10 @@ public class AntiknockbackA extends CheckVersion {
 
 	private double[] readValues(String valueString) {
 		double[] values = new double[2];
-		String[] valueStrings = valueString.split("-");
-		for (int i = 0; i < valueString.length(); i++) {
+		String[] valueStrings = Crescent.getInstance().getConfig().getString(valueString).split("-");
+
+		for (int i = 0; i < valueStrings.length; i++) {
+			Bukkit.broadcastMessage(valueStrings[i]);
 			values[i] = Double.valueOf(valueStrings[i]);
 		}
 

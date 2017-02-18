@@ -30,10 +30,9 @@ public class Detection {
 	}
 
 	public void alert() {
-		Bukkit.broadcast(
+		Bukkit.broadcastMessage(
 				ChatColor.RED + profile.getPlayer().getName() + " failed the " + check.getType().getName().toLowerCase()
-						+ checkVersion + " check. (" + check.getCertainty() + "% ping: " + profile.getPing() + ")",
-				"crescent.alert");
+						+ checkVersion + " check. (" + check.getCertainty() + "% ping: " + profile.getPing() + ")");
 	}
 
 	public Check getCheck() {

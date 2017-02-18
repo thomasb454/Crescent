@@ -8,6 +8,8 @@ public class Impossible extends Check {
 
 	public Impossible(Profile profile) {
 		super(profile, CheckType.SNEAK);
+
+		versions.add(new ImpossibleA(this));
 	}
 
 }

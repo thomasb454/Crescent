@@ -8,6 +8,8 @@ public class WaterWalk extends Check {
 
 	public WaterWalk(Profile profile) {
 		super(profile, CheckType.WATERWALK);
+
+		versions.add(new WaterWalkA(this));
 	}
 
 }

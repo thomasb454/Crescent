@@ -8,6 +8,8 @@ public class NoFall extends Check {
 
 	public NoFall(Profile profile) {
 		super(profile, CheckType.NOFALL);
+
+		versions.add(new NoFallA(this));
 	}
 
 }

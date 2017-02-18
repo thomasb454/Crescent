@@ -46,6 +46,6 @@ public enum CheckType {
 	 *         for a particular CheckType.
 	 */
 	private static int getCheatConsiderPoints(String name) {
-		return Crescent.getInstance().getConfig().getInt("cheatConsider." + name);
+		return Crescent.getInstance().getConfig().getInt(name.toLowerCase() + ".cheatConsider");
 	}
 }

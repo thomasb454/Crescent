@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.detection.checks.movement.fly;
 
+import org.bukkit.GameMode;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -20,8 +21,11 @@ public class FlyA extends CheckVersion {
 	public void call(Event event) {
 		if (event instanceof PlayerMoveEvent) {
 
-			if (profile.getBehaviour().isAscending()) {
-				// If the player is ascending.
+			final GameMode mode = profile.getPlayer().getGameMode();
+
+			if ((mode != GameMode.CREATIVE && mode != GameMode.SPECTATOR)
+					&& (profile.getBehaviour().isAscending() && profile.getBehaviour().isJumping())) {
+				// If the player is ascending and is not jumping.
 
 				if (startAscending == -1) {
 					startAscending = System.currentTimeMillis();

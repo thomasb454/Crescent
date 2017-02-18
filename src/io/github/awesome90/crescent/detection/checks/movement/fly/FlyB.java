@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.detection.checks.movement.fly;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
@@ -33,7 +34,9 @@ public class FlyB extends CheckVersion {
 		if (event instanceof PlayerMoveEvent) {
 			PlayerMoveEvent pme = (PlayerMoveEvent) event;
 
-			if (profile.getBehaviour().isDescending()) {
+			final GameMode mode = profile.getPlayer().getGameMode();
+
+			if (mode == GameMode.CREATIVE || mode == GameMode.SPECTATOR || profile.getBehaviour().isDescending()) {
 				return;
 			}
 

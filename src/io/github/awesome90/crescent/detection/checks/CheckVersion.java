@@ -56,6 +56,9 @@ public abstract class CheckVersion implements CheckApproach {
 		this.checkVersion = checkVersion;
 		this.description = description;
 		this.previous = new ArrayList<Detection>();
+
+		this.totalCalls = 1;
+		this.improperCalls = 0;
 	}
 
 	/**

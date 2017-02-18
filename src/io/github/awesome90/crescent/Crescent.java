@@ -1,8 +1,12 @@
 package io.github.awesome90.crescent;
 
+import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.awesome90.crescent.detection.CheckType;
+import io.github.awesome90.crescent.listeners.DetectionListener;
 
 public class Crescent extends JavaPlugin {
 
@@ -21,6 +25,15 @@ public class Crescent extends JavaPlugin {
 
 		// Configuration.
 		loadConfig();
+
+		registerListeners(new DetectionListener());
+	}
+
+	private void registerListeners(Listener... listeners) {
+		final PluginManager pm = Bukkit.getPluginManager();
+		for (Listener listener : listeners) {
+			pm.registerEvents(listener, this);
+		}
 	}
 
 	/**
@@ -29,7 +42,7 @@ public class Crescent extends JavaPlugin {
 	private void loadConfig() {
 
 		for (CheckType type : CheckType.values()) {
-			this.getConfig().set(type.getName() + ".cheatConsider", type.getNormalCheatConsider());
+			this.getConfig().set(type.getName().toLowerCase() + ".cheatConsider", type.getNormalCheatConsider());
 		}
 
 		// Fly check values.

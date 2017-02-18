@@ -8,6 +8,8 @@ public class Speed extends Check {
 
 	public Speed(Profile profile) {
 		super(profile, CheckType.SPEED);
+
+		versions.add(new SpeedA(this));
 	}
 
 }

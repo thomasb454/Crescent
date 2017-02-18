@@ -24,6 +24,16 @@ public abstract class Check {
 		this.versions = new ArrayList<CheckVersion>();
 	}
 
+	public CheckVersion getCheckVersion(String version) {
+		for (CheckVersion checkVersion : versions) {
+			if (checkVersion.getCheckVersion().equalsIgnoreCase(version)) {
+				return checkVersion;
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * @param event
 	 *            The event called that is passed to each CheckVersion to
@@ -47,7 +57,7 @@ public abstract class Check {
 
 		return (total / versions.size()) * 100.0;
 	}
-	
+
 	/**
 	 * @return The profile.
 	 */

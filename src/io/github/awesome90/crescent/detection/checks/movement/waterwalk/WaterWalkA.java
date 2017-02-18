@@ -33,32 +33,30 @@ public class WaterWalkA extends CheckVersion {
 	public void check() {
 		final Behaviour behaviour = profile.getBehaviour();
 
-		if (!behaviour.isInWater()) {
+		if (!behaviour.isInWater() && (!behaviour.isDescending() || !behaviour.isAscending())) {
 
 			/*
 			 * Do not execute this statement if the player is not descending
 			 * (this could lead to false positives) and if the player is in
 			 * water (and not standing on it).
 			 */
+			// The player is standing on either water or lava.
+			final Material under = behaviour.getBlockUnderPlayer().getType();
 
-			if (!behaviour.isDescending() && behaviour.isOnLiquidBlock()) {
-				// The player is standing on either water or lava.
-				final Material under = behaviour.getBlockUnderPlayer().getType();
+			if (under == Material.WATER || under == Material.STATIONARY_WATER) {
+				// The player is standing on water.
+				if (startTime == -1) {
+					startTime = System.currentTimeMillis();
+				}
 
-				if (under == Material.WATER || under == Material.STATIONARY_WATER) {
-					// The player is standing on water.
-					if (startTime == -1) {
-						startTime = System.currentTimeMillis();
-					}
-
-					if (System.currentTimeMillis() - startTime >= Crescent.getInstance().getConfig()
-							.getInt("waterwalk.a.walkTime")) {
-						callback(true);
-						startTime = -1;
-						return;
-					}
+				if (System.currentTimeMillis() - startTime >= Crescent.getInstance().getConfig()
+						.getInt("waterwalk.a.walkTime")) {
+					callback(true);
+					startTime = -1;
+					return;
 				}
 			}
+
 		}
 
 		callback(false);

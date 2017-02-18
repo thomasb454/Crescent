@@ -8,6 +8,8 @@ public class Fastbow extends Check {
 
 	public Fastbow(Profile profile) {
 		super(profile, CheckType.FASTBOW);
+
+		versions.add(new FastbowA(this));
 	}
 
 }

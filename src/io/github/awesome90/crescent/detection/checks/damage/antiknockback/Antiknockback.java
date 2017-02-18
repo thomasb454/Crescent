@@ -8,6 +8,8 @@ public class Antiknockback extends Check {
 
 	public Antiknockback(Profile profile) {
 		super(profile, CheckType.ANTIKNOCKBACK);
+
+		versions.add(new AntiknockbackA(this));
 	}
 
 }

@@ -53,11 +53,6 @@ public class SpeedA extends CheckVersion {
 				return;
 			}
 
-			// This causes false positives.
-			if (profile.getBehaviour().isDescending() || profile.getBehaviour().isAscending()) {
-				return;
-			}
-
 			if (previous == null) {
 				previous = new Location(pme.getFrom().getWorld(), pme.getFrom().getX(), pme.getFrom().getY(),
 						pme.getFrom().getZ());

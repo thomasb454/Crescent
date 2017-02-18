@@ -8,6 +8,9 @@ public class Fly extends Check {
 
 	public Fly(Profile profile) {
 		super(profile, CheckType.FLY);
+
+		versions.add(new FlyA(this));
+		versions.add(new FlyB(this));
 	}
 
 }

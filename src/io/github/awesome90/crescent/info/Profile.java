@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.Check;
+import io.github.awesome90.crescent.detection.checks.damage.antiknockback.Antiknockback;
+import io.github.awesome90.crescent.detection.checks.damage.nofall.NoFall;
+import io.github.awesome90.crescent.detection.checks.interact.fastbow.Fastbow;
+import io.github.awesome90.crescent.detection.checks.movement.fly.Fly;
+import io.github.awesome90.crescent.detection.checks.movement.impossible.Impossible;
+import io.github.awesome90.crescent.detection.checks.movement.speed.Speed;
+import io.github.awesome90.crescent.detection.checks.movement.waterwalk.WaterWalk;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 
 public class Profile {
@@ -40,6 +48,18 @@ public class Profile {
 		// Create an ArrayList containing all the checks. This should only be
 		// able to hold the maximum size of checks.
 		this.checks = new ArrayList<Check>(CheckType.values().length);
+
+		addChecks();
+	}
+
+	private void addChecks() {
+		checks.add(new Antiknockback(this));
+		checks.add(new NoFall(this));
+		checks.add(new Fastbow(this));
+		checks.add(new Fly(this));
+		checks.add(new Impossible(this));
+		checks.add(new Speed(this));
+		checks.add(new WaterWalk(this));
 	}
 
 	public UUID getUUID() {
@@ -75,7 +95,9 @@ public class Profile {
 	}
 
 	public final int getPing() {
-		return ((EntityPlayer) getPlayer()).ping;
+		final CraftPlayer cp = (CraftPlayer) getPlayer();
+		final EntityPlayer ep = (EntityPlayer) cp.getHandle();
+		return ep.ping;
 	}
 
 }
