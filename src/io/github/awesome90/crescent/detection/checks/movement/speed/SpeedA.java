@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.detection.checks.movement.speed;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -48,8 +49,13 @@ public class SpeedA extends CheckVersion {
 			 * Check if the player has actually moved (not just moved their
 			 * head).
 			 */
-			if (pme.getTo().getBlockX() == pme.getFrom().getBlockX()
-					&& pme.getTo().getBlockZ() == pme.getFrom().getBlockZ()) {
+			if (profile.getPlayer().getGameMode() == GameMode.SPECTATOR
+					|| (pme.getTo().getBlockX() == pme.getFrom().getBlockX()
+							&& pme.getTo().getBlockZ() == pme.getFrom().getBlockZ())) {
+				return;
+			}
+
+			if (profile.getBehaviour().isDescending() || profile.getBehaviour().isAscending()) {
 				return;
 			}
 

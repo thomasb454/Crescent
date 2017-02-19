@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.detection.checks.movement.waterwalk;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -30,39 +31,38 @@ public class WaterWalkA extends CheckVersion {
 			PlayerMoveEvent pme = (PlayerMoveEvent) event;
 
 			final Behaviour behaviour = profile.getBehaviour();
+			final GameMode mode = profile.getPlayer().getGameMode();
 
-			if (behaviour.isOnLiquidBlock() && !behaviour.isInWater()
-					&& (!behaviour.isDescending() || !behaviour.isAscending())) {
+			if ((mode != GameMode.CREATIVE && mode != GameMode.SPECTATOR) && behaviour.isOnLiquidBlock()
+					&& !behaviour.isInWater() && (!behaviour.isDescending() || !behaviour.isAscending())) {
+				/*
+				 * Do not execute this statement if the player is not descending
+				 * (this could lead to false positives) and if the player is in
+				 * water (and not standing on it).
+				 */
 
 				final Material from = getMaterialDown(pme.getFrom());
 				final Material to = getMaterialDown(pme.getTo());
 
 				if (isWater(from) && isWater(to)) {
-					/*
-					 * Do not execute this statement if the player is not
-					 * descending (this could lead to false positives) and if
-					 * the player is in water (and not standing on it).
-					 */
-					// The player is standing on either water or lava.
-					final Material under = behaviour.getBlockUnderPlayer().getType();
 
-					if (under == Material.WATER || under == Material.STATIONARY_WATER) {
-						// The player is standing on water.
-						if (startTime == -1) {
-							startTime = System.currentTimeMillis();
-						}
-
-						if (System.currentTimeMillis() - startTime >= Crescent.getInstance().getConfig()
-								.getInt("waterwalk.a.walkTime")) {
-							callback(true);
-							startTime = -1;
-							return;
-						}
+					// The player is standing on water.
+					if (startTime == -1) {
+						startTime = System.currentTimeMillis();
 					}
 
+					if (System.currentTimeMillis() - startTime >= Crescent.getInstance().getConfig()
+							.getInt("waterwalk.a.walkTime")) {
+						callback(true);
+						startTime = -1;
+						return;
+					}
+
+				} else {
+					startTime = -1;
 				}
 			}
-			
+
 			callback(false);
 		}
 	}

@@ -60,6 +60,10 @@ public class Behaviour {
 		return in == Material.WATER || in == Material.STATIONARY_WATER;
 	}
 
+	public final boolean isInWeb() {
+		return getBlockPlayerIsIn().getType() == Material.WEB;
+	}
+
 	public final boolean isOnLadder() {
 		return false; // Change this!
 	}
@@ -74,6 +78,10 @@ public class Behaviour {
 
 	public final Block getBlockUnderPlayer() {
 		return getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN);
+	}
+
+	public final double getEPF(int level, double typeModifier) {
+		return Math.floor((6 + Math.pow(level, 2)) * typeModifier / 3);
 	}
 
 	private final Player getPlayer() {

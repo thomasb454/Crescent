@@ -52,7 +52,7 @@ public class Crescent extends JavaPlugin {
 
 		this.getConfig().set("waterwalk.a.walkTime", 1000);
 
-		this.getConfig().set("fastbow.a.allowedMinimumDifference", 600);
+		this.getConfig().set("fastbow.a.allowedMinimumDifference", 250);
 
 		this.getConfig().set("speed.a.distanceCheck", 10);
 		this.getConfig().set("speed.a.compareDifference", 200);

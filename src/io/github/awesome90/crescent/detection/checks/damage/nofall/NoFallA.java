@@ -1,14 +1,18 @@
 package io.github.awesome90.crescent.detection.checks.damage.nofall;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerMoveEvent;
 
-import io.github.awesome90.crescent.Crescent;
+import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
+import io.github.awesome90.crescent.info.Profile;
 
 public class NoFallA extends CheckVersion {
 
@@ -29,40 +33,27 @@ public class NoFallA extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
-		if (event instanceof EntityDamageEvent) {
-			final EntityDamageEvent ede = (EntityDamageEvent) event;
+		if (event instanceof PlayerMoveEvent) {
+			final PlayerMoveEvent pme = (PlayerMoveEvent) event;
 
-			if (ede.getCause() == DamageCause.FALL) {
-				final Player player = profile.getPlayer();
-				final double original = player.getHealth();
+			final Player player = profile.getPlayer();
+			final float fallDistance = player.getFallDistance();
 
-				final double result = ede.getFinalDamage();
+			final Behaviour behaviour = profile.getBehaviour();
 
-				final double calculatedHealth = player.getHealth() - result;
+			// Check if player has moved from air to ground.
+			if (pme.getFrom().getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR
+					&& pme.getTo().getBlock().getRelative(BlockFace.DOWN).getType().isSolid()) {
+				if (player.getGameMode() != GameMode.CREATIVE && !behaviour.isInWater() && !behaviour.isInWeb()
+						&& !player.isInsideVehicle() && !player.isSleeping()) {
+					final double expected = getExpectedDamage(profile, fallDistance);
+					Bukkit.broadcastMessage("expected: " + expected);
+					Bukkit.broadcastMessage("actual: " + player.getHealth());
 
-				Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), new Runnable() {
-
-					@Override
-					public void run() {
-						double sensibleHealth = calculatedHealth;
-						if (sensibleHealth < 0) {
-							sensibleHealth = 0;
-						}
-
-						final double current = player.getHealth();
-						if (current < sensibleHealth) {
-							final double difference = sensibleHealth - (original - current);
-
-							totalDisplacedHealth += difference;
-
-							callback(true);
-						} else {
-							callback(false);
-						}
+					if (player.getHealth() < expected) {
+						callback(true);
 					}
-				}, 2L);
-
-				totalDamage += result;
+				}
 			}
 		}
 	}
@@ -79,6 +70,16 @@ public class NoFallA extends CheckVersion {
 	@Override
 	public double checkCurrentCertainty() {
 		return (totalDisplacedHealth / totalDamage) * 100.0;
+	}
+
+	private double getExpectedDamage(Profile profile, float fallDistance) {
+		final int featherFalling = profile.getPlayer().getInventory().getBoots()
+				.getEnchantmentLevel(Enchantment.PROTECTION_FALL);
+		final double expectedDamage = (fallDistance * 0.5) - 1.5;
+		final double epf = profile.getBehaviour().getEPF(featherFalling, 2.5);
+
+		// Return how much the EPF reduces the damage by.
+		return expectedDamage / epf;
 	}
 
 }

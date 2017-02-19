@@ -6,7 +6,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import io.github.awesome90.crescent.detection.CheckType;
@@ -26,6 +25,8 @@ public class DetectionListener implements Listener {
 
 		getCheckVersion(player, CheckType.WATERWALK, "A").call(event);
 
+		getCheckVersion(player, CheckType.NOFALL, "A").call(event);
+
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
 	}
 
@@ -37,9 +38,7 @@ public class DetectionListener implements Listener {
 
 		final Player player = (Player) event.getEntity();
 
-		getCheckVersion(player, CheckType.NOFALL, "A").call(event);
 		getCheckVersion(player, CheckType.ANTIKNOCKBACK, "A").call(event);
-		getCheckVersion(player, CheckType.ANTIKNOCKBACK, "B").call(event);
 	}
 
 	@EventHandler
