@@ -81,7 +81,7 @@ public class Behaviour {
 	}
 
 	public final double getEPF(int level, double typeModifier) {
-		return Math.floor((6 + Math.pow(level, 2)) * typeModifier / 3);
+		return Math.floor((6 + level * level) * typeModifier / 3);
 	}
 
 	private final Player getPlayer() {
