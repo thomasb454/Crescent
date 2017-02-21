@@ -1,5 +1,9 @@
 package io.github.awesome90.crescent.detection.checks.movement.speed;
 
+import java.util.concurrent.TimeUnit;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
@@ -31,7 +35,7 @@ public class SpeedA extends CheckVersion {
 		final int checkTime = 5; // Check every five seconds.
 
 		if (lastTime != -1) {
-			if ((System.currentTimeMillis() - lastTime) / 1000 >= checkTime) {
+			if (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - lastTime) >= checkTime) {
 				final double deltaX = Math.abs(x - lastX), deltaY = Math.abs(y - lastY), deltaZ = Math.abs(z - lastZ);
 
 				final double movementSquared = (deltaX * deltaX) + (deltaY + deltaY) + (deltaZ * deltaZ);
@@ -41,18 +45,23 @@ public class SpeedA extends CheckVersion {
 				final double expectedMovementSquared = (vector.getX() * vector.getX()) + (vector.getY() * vector.getY())
 						+ (vector.getZ() * vector.getZ());
 
-				if ((movementSquared - expectedMovementSquared) / (checkTime * 20) > 100) {
+				final double difference = (movementSquared - expectedMovementSquared) * (checkTime * 20);
+				Bukkit.broadcastMessage(ChatColor.AQUA + "" + difference);
+				if (difference > 100) {
 					// The player is moving too quickly.
+					Bukkit.broadcastMessage("too quick");
 					callback(true);
 				}
+
+				this.lastTime = -1;
 			}
+		} else {
+			this.lastX = x;
+			this.lastY = y;
+			this.lastZ = z;
+
+			this.lastTime = System.currentTimeMillis();
 		}
-
-		this.lastX = x;
-		this.lastY = y;
-		this.lastZ = z;
-
-		this.lastTime = System.currentTimeMillis();
 	}
 
 	@Override

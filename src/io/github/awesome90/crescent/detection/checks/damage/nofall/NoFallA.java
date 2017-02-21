@@ -2,7 +2,6 @@ package io.github.awesome90.crescent.detection.checks.damage.nofall;
 
 import java.util.Map;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -69,8 +68,6 @@ public class NoFallA extends CheckVersion {
 
 						// Reset the timer.
 						seconds = -1.0;
-						Bukkit.broadcastMessage("expected: " + (player.getHealth() - expected));
-						Bukkit.broadcastMessage("actual: " + player.getHealth());
 
 						if (player.getHealth() < expected) {
 							callback(true);
