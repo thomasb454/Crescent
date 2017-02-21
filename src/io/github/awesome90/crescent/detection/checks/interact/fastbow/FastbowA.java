@@ -3,11 +3,13 @@ package io.github.awesome90.crescent.detection.checks.interact.fastbow;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityShootBowEvent;
 
+import com.comphenix.protocol.events.PacketContainer;
+
 import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
-public class FastbowA extends CheckVersion {
+public class FastbowA extends CheckVersion  {
 
 	/**
 	 * The time that a player previously shot a bow.
@@ -33,7 +35,7 @@ public class FastbowA extends CheckVersion {
 	}
 
 	@Override
-	public void check() {
+	public void call(PacketContainer packet) {
 
 	}
 

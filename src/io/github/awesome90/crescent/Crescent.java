@@ -5,6 +5,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.listeners.DetectionListener;
 
@@ -19,9 +22,13 @@ public class Crescent extends JavaPlugin {
 		return instance;
 	}
 
+	private ProtocolManager protocolManager;
+
 	@Override
 	public void onEnable() {
 		instance = this;
+
+		protocolManager = ProtocolLibrary.getProtocolManager();
 
 		// Configuration.
 		loadConfig();
@@ -71,6 +78,10 @@ public class Crescent extends JavaPlugin {
 
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
+	}
+
+	public ProtocolManager getProtocolManager() {
+		return protocolManager;
 	}
 
 }

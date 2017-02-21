@@ -5,10 +5,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import com.comphenix.protocol.events.PacketContainer;
+
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
-public class ImpossibleA extends CheckVersion {
+public class ImpossibleA extends CheckVersion  {
 
 	public ImpossibleA(Check check) {
 		super(check, "A", "Checks whether the player is completing impossible actions.");
@@ -34,7 +36,7 @@ public class ImpossibleA extends CheckVersion {
 	}
 
 	@Override
-	public void check() {
+	public void call(PacketContainer packet) {
 
 	}
 

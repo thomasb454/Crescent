@@ -3,7 +3,6 @@ package io.github.awesome90.crescent.detection.checks.damage.antiknockback;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
@@ -13,6 +12,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
+
+import com.comphenix.protocol.events.PacketContainer;
 
 import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.checks.Check;
@@ -116,10 +117,10 @@ public class AntiknockbackA extends CheckVersion {
 	}
 
 	@Override
-	public void check() {
+	public void call(PacketContainer packet) {
 
 	}
-
+	
 	private void checkWithRelevantNumbers(boolean damagerSprinting, ItemStack damagerSword, double totalXZ) {
 		String key = "antiknockback.a." + (damagerSprinting ? "sprint" : "nonSprint");
 

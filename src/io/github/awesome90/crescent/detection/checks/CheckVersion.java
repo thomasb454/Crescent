@@ -12,6 +12,7 @@ public abstract class CheckVersion implements CheckApproach {
 	 * The category of check that
 	 */
 	protected final Check check;
+
 	/**
 	 * The profile of the player.
 	 */

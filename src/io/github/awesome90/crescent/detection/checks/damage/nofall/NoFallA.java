@@ -13,6 +13,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.comphenix.protocol.events.PacketContainer;
+
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
@@ -79,12 +81,8 @@ public class NoFallA extends CheckVersion {
 		}
 	}
 
-	/*
-	 * No use for check method here, things can only be checked in the above
-	 * listener.
-	 */
 	@Override
-	public void check() {
+	public void call(PacketContainer packet) {
 
 	}
 
