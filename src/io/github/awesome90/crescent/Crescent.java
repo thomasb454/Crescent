@@ -33,14 +33,15 @@ public class Crescent extends JavaPlugin {
 		// Configuration.
 		loadConfig();
 
-		registerListeners(new DetectionListener());
+		registerListeners();
 	}
 
-	private void registerListeners(Listener... listeners) {
+	private void registerListeners() {
+		final DetectionListener detections = new DetectionListener();
+		detections.addPacketListeners();
+
 		final PluginManager pm = Bukkit.getPluginManager();
-		for (Listener listener : listeners) {
-			pm.registerEvents(listener, this);
-		}
+		pm.registerEvents(detections, this);
 	}
 
 	/**
@@ -60,9 +61,6 @@ public class Crescent extends JavaPlugin {
 		this.getConfig().set("waterwalk.a.walkTime", 1000);
 
 		this.getConfig().set("fastbow.a.allowedMinimumDifference", 250);
-
-		this.getConfig().set("speed.a.distanceCheck", 10);
-		this.getConfig().set("speed.a.compareDifference", 200);
 
 		// Antiknockback check A default values.
 		this.getConfig().set("antiknockback.a.nonSprintNormal", "2.1-3.1");

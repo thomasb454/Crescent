@@ -1,108 +1,63 @@
 package io.github.awesome90.crescent.detection.checks.movement.speed;
 
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.events.PacketContainer;
 
-import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
-public class SpeedA extends CheckVersion  {
+public class SpeedA extends CheckVersion {
 
-	/**
-	 * The total difference in the time between what the player has travelled
-	 * for and what the player should have travelled for.
-	 */
-	private double totalChange;
-	/**
-	 * The total distance that the player should have travelled for.
-	 */
-	private double totalTime;
-
-	/**
-	 * The last recorded distance of the player (used to measure distance from
-	 * current in order to calculate speed).
-	 */
-	private Location previous;
-	/**
-	 * The start time of the current measurement.
-	 */
-	private double start;
+	private long lastTime;
+	private double lastX, lastY, lastZ;
 
 	public SpeedA(Check check) {
-		super(check, "A", "Compares the movement speed of players compared to expected movement speeds.");
-
-		this.totalChange = totalTime = 0.0;
-
-		this.previous = null;
-		this.start = -1;
+		super(check, "A", "Checks if a player is moving too quickly.");
+		this.lastTime = -1;
+		this.lastX = lastY = lastZ = -1.0;
 	}
 
 	@Override
 	public void call(Event event) {
-		if (event instanceof PlayerMoveEvent) {
-			PlayerMoveEvent pme = (PlayerMoveEvent) event;
 
-			/*
-			 * Check if the player has actually moved (not just moved their
-			 * head).
-			 */
-			if (profile.getPlayer().getGameMode() == GameMode.SPECTATOR
-					|| (pme.getTo().getBlockX() == pme.getFrom().getBlockX()
-							&& pme.getTo().getBlockZ() == pme.getFrom().getBlockZ())) {
-				return;
-			}
-
-			if (profile.getBehaviour().isDescending() || profile.getBehaviour().isAscending()) {
-				return;
-			}
-
-			if (previous == null) {
-				previous = new Location(pme.getFrom().getWorld(), pme.getFrom().getX(), pme.getFrom().getY(),
-						pme.getFrom().getZ());
-				start = System.currentTimeMillis();
-				return;
-			}
-
-			final double distance = previous.distanceSquared(pme.getTo());
-
-			final int distanceCheck = Crescent.getInstance().getConfig().getInt("speed.a.distanceCheck");
-
-			if (distance >= (distanceCheck * distanceCheck)) {
-				// Player has moved 5 blocks or over.
-
-				final double speed = profile.getBehaviour().getCurrentTransportMethod().getSpeed();
-
-				// Don't use square roots in the actual check!
-				final double expected = (distance / (speed * speed)) * 1000.0;
-				final double actual = Math.pow(System.currentTimeMillis() - start, 2.0);
-
-				final double difference = Math.abs(expected - actual);
-
-				if (difference >= Crescent.getInstance().getConfig().getInt("speed.a.compareDistance")) {
-					callback(true);
-
-					totalChange += difference;
-					totalTime += expected;
-				}
-
-				previous = null;
-			}
-		}
 	}
 
 	@Override
 	public void call(PacketContainer packet) {
+		final double x = packet.getDoubles().read(0), y = packet.getDoubles().read(1), z = packet.getDoubles().read(2);
 
+		final int checkTime = 5; // Check every five seconds.
+
+		if (lastTime != -1) {
+			if ((System.currentTimeMillis() - lastTime) / 1000 >= checkTime) {
+				final double deltaX = Math.abs(x - lastX), deltaY = Math.abs(y - lastY), deltaZ = Math.abs(z - lastZ);
+
+				final double movementSquared = (deltaX * deltaX) + (deltaY + deltaY) + (deltaZ * deltaZ);
+
+				final Vector vector = profile.getPlayer().getVelocity();
+
+				final double expectedMovementSquared = (vector.getX() * vector.getX()) + (vector.getY() * vector.getY())
+						+ (vector.getZ() * vector.getZ());
+
+				if ((movementSquared - expectedMovementSquared) / (checkTime * 20) > 100) {
+					// The player is moving too quickly.
+					callback(true);
+				}
+			}
+		}
+
+		this.lastX = x;
+		this.lastY = y;
+		this.lastZ = z;
+
+		this.lastTime = System.currentTimeMillis();
 	}
-	
+
 	@Override
 	public double checkCurrentCertainty() {
-		return (totalChange / totalTime) * 100.0;
+		return 0.0;
 	}
 
 }
