@@ -11,9 +11,11 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 
 import io.github.awesome90.crescent.Crescent;
+import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 import io.github.awesome90.crescent.info.Profile;
@@ -30,6 +32,17 @@ public class DetectionListener implements Listener {
 						if (event.getPacketType() == PacketType.Play.Client.POSITION) {
 							getCheckVersion(event.getPlayer(), CheckType.SPEED, "A").call(event.getPacket());
 						}
+					}
+				});
+
+		crescent.getProtocolManager().addPacketListener(
+				new PacketAdapter(crescent, ListenerPriority.NORMAL, PacketType.Play.Server.ENTITY_VELOCITY) {
+					@Override
+					public void onPacketSending(PacketEvent event) {
+						final Behaviour behaviour = Profile.getProfile(event.getPlayer().getUniqueId()).getBehaviour();
+						final PacketContainer packet = event.getPacket();
+						behaviour.setVelocity(packet.getIntegers().read(0), packet.getIntegers().read(1),
+								packet.getIntegers().read(2));
 					}
 				});
 	}

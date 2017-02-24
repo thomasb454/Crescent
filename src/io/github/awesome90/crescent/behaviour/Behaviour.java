@@ -13,6 +13,8 @@ public class Behaviour {
 
 	private boolean jumping;
 
+	private double velX, velY, velZ;
+
 	/**
 	 * @param profile
 	 *            The profile of the player whose behaviour is being analysed.
@@ -20,6 +22,8 @@ public class Behaviour {
 	public Behaviour(Profile profile) {
 		this.profile = profile;
 		this.jumping = false;
+
+		this.velX = velY = velZ = 0.0;
 	}
 
 	public final TransportMethod getCurrentTransportMethod() {
@@ -37,6 +41,24 @@ public class Behaviour {
 			return TransportMethod.WALKING;
 		}
 
+	}
+
+	public void setVelocity(double velX, double velY, double velZ) {
+		this.velX = velX;
+		this.velY = velY;
+		this.velZ = velZ;
+	}
+
+	public final double getVelX() {
+		return velX;
+	}
+
+	public final double getVelY() {
+		return velY;
+	}
+
+	public final double getVelZ() {
+		return velZ;
 	}
 
 	public void setJumping(boolean jumping) {
