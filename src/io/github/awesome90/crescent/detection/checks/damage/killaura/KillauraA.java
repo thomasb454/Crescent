@@ -1,5 +1,7 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
+import java.util.ArrayList;
+
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -11,8 +13,19 @@ import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
 public class KillauraA extends CheckVersion {
 
+	private ArrayList<FakePlayer> currentChecks;
+
 	public KillauraA(Check check, String checkVersion, String description) {
 		super(check, checkVersion, description);
+		this.currentChecks = new ArrayList<FakePlayer>();
+	}
+
+	public void addFakePlayer(FakePlayer player) {
+		currentChecks.add(player);
+	}
+
+	public void removeFakePlayer(FakePlayer player) {
+		currentChecks.remove(player);
 	}
 
 	@Override
@@ -24,9 +37,11 @@ public class KillauraA extends CheckVersion {
 		}
 	}
 
-	private void spawnFakePlayer(Location location) {
-		final FakePlayer fake = new FakePlayer();
-		fake.spawn(location, profile.getPlayer());
+	public void spawnFakePlayer(Location location) {
+		final FakePlayer fake = new FakePlayer(profile, 2);
+		fake.spawn(location);
+
+		currentChecks.add(fake);
 	}
 
 	@Override

@@ -13,21 +13,39 @@ import com.comphenix.packetwrapper.WrapperPlayerServerNamedEntitySpawn;
 import com.comphenix.protocol.ProtocolManager;
 
 import io.github.awesome90.crescent.Crescent;
+import io.github.awesome90.crescent.detection.CheckType;
+import io.github.awesome90.crescent.info.Profile;
 
 public class FakePlayer {
 
+	private Profile profile;
+	private boolean alive;
 	private final Random random;
 	private final String name;
 	private final UUID uuid;
 	private final int id;
 	private final ProtocolManager pm;
 
+	private int life;
+
 	/**
 	 * The players that can see the fake player.
 	 */
 	private final Player[] players;
 
-	public FakePlayer(Player... players) {
+	/**
+	 * @param profile
+	 *            The profile of the player who is being checked by this fake
+	 *            player.
+	 * @param life
+	 *            The time in seconds of the player before it is despawned.
+	 * @param players
+	 *            The players that the fake player should be visible to.
+	 */
+	public FakePlayer(Profile profile, int life, Player... players) {
+		this.profile = profile;
+		this.alive = false;
+		this.life = life;
 		this.random = new Random();
 		final Player randomPlayer = (Player) Bukkit.getOnlinePlayers().toArray()[random
 				.nextInt(Bukkit.getOnlinePlayers().size())];
@@ -45,6 +63,8 @@ public class FakePlayer {
 		spawn.setPlayerUUID(uuid.toString());
 		spawn.setPlayerName(name);
 
+		this.alive = true;
+
 		for (Player player : players) {
 			try {
 				pm.sendServerPacket(player, spawn.getHandle());
@@ -52,11 +72,23 @@ public class FakePlayer {
 				e.printStackTrace();
 			}
 		}
+
+		Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), new Runnable() {
+
+			@Override
+			public void run() {
+				if (alive) {
+					despawn();
+				}
+			}
+		}, 20 * life);
 	}
 
 	public void despawn() {
 		WrapperPlayServerEntityDestroy destroy = new WrapperPlayServerEntityDestroy();
 		destroy.setEntities(new int[] { id });
+
+		this.alive = false;
 
 		for (Player player : players) {
 			try {
@@ -64,6 +96,19 @@ public class FakePlayer {
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
 			}
+		}
+
+		KillauraA killaura = (KillauraA) profile.getCheck(CheckType.KILLAURA).getCheckVersion("A");
+		killaura.removeFakePlayer(this);
+	}
+
+	public void hit() {
+		despawn();
+	}
+
+	public void broadcastToWatchers(String message) {
+		for (Player player : players) {
+			player.sendMessage(message);
 		}
 	}
 

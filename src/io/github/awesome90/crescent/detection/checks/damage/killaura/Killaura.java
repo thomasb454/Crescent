@@ -1,5 +1,13 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
-public class Killaura {
+import io.github.awesome90.crescent.detection.CheckType;
+import io.github.awesome90.crescent.detection.checks.Check;
+import io.github.awesome90.crescent.info.Profile;
+
+public class Killaura extends Check {
+
+	public Killaura(Profile profile) {
+		super(profile, CheckType.KILLAURA);
+	}
 
 }

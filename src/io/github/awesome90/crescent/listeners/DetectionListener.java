@@ -55,6 +55,7 @@ public class DetectionListener implements Listener {
 
 							if (packet.getIntegers().read(0) == 1) {
 								// 1 = attack.
+								
 							}
 						}
 					}
