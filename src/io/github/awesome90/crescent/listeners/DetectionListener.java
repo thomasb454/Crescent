@@ -45,6 +45,20 @@ public class DetectionListener implements Listener {
 								packet.getIntegers().read(2));
 					}
 				});
+
+		crescent.getProtocolManager().addPacketListener(
+				new PacketAdapter(crescent, ListenerPriority.NORMAL, PacketType.Play.Client.USE_ENTITY) {
+					@Override
+					public void onPacketReceiving(PacketEvent event) {
+						if (event.getPacketType() == PacketType.Play.Client.USE_ENTITY) {
+							final PacketContainer packet = event.getPacket();
+
+							if (packet.getIntegers().read(0) == 1) {
+								// 1 = attack.
+							}
+						}
+					}
+				});
 	}
 
 	@EventHandler
