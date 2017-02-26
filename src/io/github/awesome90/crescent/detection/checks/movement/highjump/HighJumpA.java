@@ -5,8 +5,6 @@ import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.comphenix.protocol.events.PacketContainer;
-
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 import io.github.awesome90.crescent.events.PlayerJumpEvent;
@@ -81,11 +79,6 @@ public class HighJumpA extends CheckVersion {
 		 */
 
 		return distance - extra > 1.25;
-	}
-
-	@Override
-	public void call(PacketContainer packet) {
-
 	}
 
 	@Override

@@ -7,8 +7,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import com.comphenix.protocol.events.PacketContainer;
-
 import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
@@ -67,11 +65,6 @@ public class WaterWalkA extends CheckVersion {
 
 			callback(false);
 		}
-	}
-
-	@Override
-	public void call(PacketContainer packet) {
-
 	}
 
 	/**

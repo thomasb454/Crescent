@@ -3,8 +3,6 @@ package io.github.awesome90.crescent.detection.checks.damage.killaura;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import com.comphenix.protocol.events.PacketContainer;
-
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
@@ -27,11 +25,6 @@ public class KillauraB extends CheckVersion {
 				callback(true);
 			}
 		}
-	}
-
-	@Override
-	public void call(PacketContainer packet) {
-
 	}
 
 	@Override

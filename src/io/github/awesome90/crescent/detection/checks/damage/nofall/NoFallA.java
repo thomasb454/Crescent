@@ -12,8 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.comphenix.protocol.events.PacketContainer;
-
 import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
@@ -105,11 +103,6 @@ public class NoFallA extends CheckVersion {
 				lastY = -1.0;
 			}
 		}
-	}
-
-	@Override
-	public void call(PacketContainer packet) {
-
 	}
 
 	@Override

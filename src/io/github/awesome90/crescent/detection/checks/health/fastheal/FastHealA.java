@@ -4,8 +4,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 
-import com.comphenix.protocol.events.PacketContainer;
-
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
@@ -75,11 +73,6 @@ public class FastHealA extends CheckVersion {
 		}
 
 		return !(amount == 1.0 && current - lastTime < regenRate);
-	}
-
-	@Override
-	public void call(PacketContainer packet) {
-
 	}
 
 	@Override

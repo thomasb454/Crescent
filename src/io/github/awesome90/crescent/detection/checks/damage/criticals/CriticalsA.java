@@ -5,8 +5,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 
-import com.comphenix.protocol.events.PacketContainer;
-
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
@@ -39,11 +37,6 @@ public class CriticalsA extends CheckVersion {
 		return behaviour.isDescending() && behaviour.isOnGround() && !behaviour.isOnLadder() && !behaviour.isOnVine()
 				&& !behaviour.isInWater() && !player.hasPotionEffect(PotionEffectType.BLINDNESS)
 				&& !player.isInsideVehicle() && !player.isSprinting();
-	}
-
-	@Override
-	public void call(PacketContainer packet) {
-
 	}
 
 	@Override

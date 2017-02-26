@@ -37,7 +37,6 @@ public class Crescent extends JavaPlugin {
 
 	private void registerListeners() {
 		final DetectionListener detections = new DetectionListener();
-		detections.addPacketListeners();
 
 		final PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(detections, this);

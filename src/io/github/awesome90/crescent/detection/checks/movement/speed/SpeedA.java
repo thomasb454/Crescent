@@ -1,10 +1,9 @@
 package io.github.awesome90.crescent.detection.checks.movement.speed;
 
 import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
-import com.comphenix.protocol.events.PacketContainer;
-
-import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
@@ -23,37 +22,35 @@ public class SpeedA extends CheckVersion {
 
 	@Override
 	public void call(Event event) {
+		if (event instanceof PlayerMoveEvent) {
+			PlayerMoveEvent pme = (PlayerMoveEvent) event;
+			final double x = pme.getTo().getX(), y = pme.getTo().getY(), z = pme.getTo().getZ();
 
-	}
+			if (x == lastX && y == lastY && z == lastZ) {
+				// The player has not moved so return.
+				return;
+			}
 
-	@Override
-	public void call(PacketContainer packet) {
-		final double x = packet.getDoubles().read(0), y = packet.getDoubles().read(1), z = packet.getDoubles().read(2);
-
-		if (x == lastX && y == lastY && z == lastZ) {
-			// The player has not moved so return.
-			return;
-		}
-
-		if (lastTime == -1.0) {
-			lastTime = System.currentTimeMillis();
-			lastX = x;
-			lastY = y;
-			lastZ = z;
-		} else {
-			check(x, y, z);
+			if (lastTime == -1.0) {
+				lastTime = System.currentTimeMillis();
+				lastX = x;
+				lastY = y;
+				lastZ = z;
+			} else {
+				check(x, y, z);
+			}
 		}
 	}
 
 	private void check(double x, double y, double z) {
-		final double timeDifference = (System.currentTimeMillis() - lastTime) / 1000;
+		final double timeDifference = (System.currentTimeMillis() - lastTime) / 1000.0;
 		if (timeDifference >= checkTime) {
 			final double deltaX = Math.abs(x - lastX), deltaY = Math.abs(y - lastY), deltaZ = Math.abs(z - lastZ);
 
 			final double movementSquared = (deltaX * deltaX) + (deltaY + deltaY) + (deltaZ * deltaZ);
 
-			final Behaviour behaviour = profile.getBehaviour();
-			final double velX = behaviour.getVelX(), velY = behaviour.getVelY(), velZ = behaviour.getVelZ();
+			final Vector velocity = profile.getPlayer().getVelocity();
+			final double velX = velocity.getX(), velY = velocity.getY(), velZ = velocity.getZ();
 
 			final double expectedMovementSquared = (velX * velX) + (velY * velY) + (velZ * velZ);
 

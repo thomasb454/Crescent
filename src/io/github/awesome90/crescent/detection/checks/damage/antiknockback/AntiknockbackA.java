@@ -13,8 +13,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 
-import com.comphenix.protocol.events.PacketContainer;
-
 import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
@@ -116,11 +114,6 @@ public class AntiknockbackA extends CheckVersion {
 		}
 	}
 
-	@Override
-	public void call(PacketContainer packet) {
-
-	}
-	
 	private void checkWithRelevantNumbers(boolean damagerSprinting, ItemStack damagerSword, double totalXZ) {
 		String key = "antiknockback.a." + (damagerSprinting ? "sprint" : "nonSprint");
 

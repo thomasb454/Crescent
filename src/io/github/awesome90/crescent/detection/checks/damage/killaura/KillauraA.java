@@ -6,8 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import com.comphenix.protocol.events.PacketContainer;
-
 import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
@@ -42,11 +40,6 @@ public class KillauraA extends CheckVersion {
 		fake.spawn(location);
 
 		currentChecks.add(fake);
-	}
-
-	@Override
-	public void call(PacketContainer packet) {
-
 	}
 
 	@Override
