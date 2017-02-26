@@ -4,8 +4,8 @@ import io.github.awesome90.crescent.Crescent;
 
 public enum CheckType {
 	WATERWALK("WaterWalk", 10), NOFALL("NoFall", 10), ANTIKNOCKBACK("Antiknockback", 10), SNEAK("Sneak", 10), FLY("Fly",
-			10), FASTBOW("Fastbow", 10), SPEED("Speed",
-					10), KILLAURA("Killaura", 10), FASTHEAL("FastHeal", 10), HIGHJUMP("HighJump", 10);
+			10), FASTBOW("Fastbow", 10), SPEED("Speed", 10), KILLAURA("Killaura",
+					10), FASTHEAL("FastHeal", 10), HIGHJUMP("HighJump", 10), CRITICALS("Criticals", 10);
 
 	/**
 	 * The user-friendly name of the check.

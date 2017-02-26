@@ -83,11 +83,14 @@ public class DetectionListener implements Listener {
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
 		if (event.getEntity() instanceof Player) {
-			getCheckVersion((Player) event.getEntity(), CheckType.KILLAURA, "A").call(event);
+			final Player player = (Player) event.getEntity();
+			getCheckVersion(player, CheckType.KILLAURA, "A").call(event);
 		}
 
 		if (event.getDamager() instanceof Player) {
-			getCheckVersion((Player) event.getDamager(), CheckType.KILLAURA, "A").call(event);
+			final Player player = (Player) event.getDamager();
+			getCheckVersion(player, CheckType.CRITICALS, "A").call(event);
+			getCheckVersion(player, CheckType.KILLAURA, "A").call(event);
 		}
 	}
 

@@ -22,7 +22,7 @@ public class CriticalsA extends CheckVersion {
 		if (event instanceof EntityDamageByEntityEvent) {
 			final Player player = profile.getPlayer();
 
-			if (isCritical() && profile.getBehaviour().getBlockUnderPlayer().getType().isSolid()
+			if (canDealCritical() && profile.getBehaviour().getBlockUnderPlayer().getType().isSolid()
 					&& (player.getLocation().getY() % 1.0 == 0.0 || player.getLocation().getY() % 0.5 == 0.0)) {
 				// This is not a valid critical hit.
 				callback(true);
@@ -30,7 +30,10 @@ public class CriticalsA extends CheckVersion {
 		}
 	}
 
-	private boolean isCritical() {
+	/**
+	 * @return Whether the player can deal a critical hit or not.
+	 */
+	private boolean canDealCritical() {
 		final Player player = profile.getPlayer();
 		final Behaviour behaviour = profile.getBehaviour();
 		return behaviour.isDescending() && behaviour.isOnGround() && !behaviour.isOnLadder() && !behaviour.isOnVine()
