@@ -121,6 +121,14 @@ public class NoFallA extends CheckVersion {
 		final Player player = profile.getPlayer();
 
 		/*
+		 * Some formulae used from here:
+		 * http://www.minecraftforum.net/forums/minecraft-discussion/survival-
+		 * mode/2577601-facts-fall-damage
+		 * 
+		 * Thank you to beaudigi for making this!
+		 */
+
+		/*
 		 * Always round up to avoid false positives.
 		 * 
 		 * Take the smallest out of the calculated and the player's maximum
@@ -155,17 +163,14 @@ public class NoFallA extends CheckVersion {
 
 		for (PotionEffect effect : player.getActivePotionEffects()) {
 			if (effect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
-				Bukkit.broadcastMessage("resistance");
 				potionReduction += damage - ((1 - effect.getAmplifier() * 0.2) * fallDistance - 3);
 			}
 			if (effect.getType().equals(PotionEffectType.JUMP)) {
-				Bukkit.broadcastMessage("jump");
 				potionReduction += damage - (fallDistance - 3 - effect.getAmplifier());
 			}
 		}
 
-		Bukkit.broadcastMessage("enchantment: " + enchantmentReduction + ", potion: " + potionReduction);
-		// The maths just works, ok! :D
+		// The maths just works, ok? :D
 		return damage - enchantmentReduction - potionReduction - 1;
 	}
 

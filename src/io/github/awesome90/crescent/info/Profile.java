@@ -13,6 +13,7 @@ import io.github.awesome90.crescent.detection.checks.Check;
 import io.github.awesome90.crescent.detection.checks.damage.antiknockback.Antiknockback;
 import io.github.awesome90.crescent.detection.checks.damage.killaura.Killaura;
 import io.github.awesome90.crescent.detection.checks.damage.nofall.NoFall;
+import io.github.awesome90.crescent.detection.checks.health.fastheal.FastHeal;
 import io.github.awesome90.crescent.detection.checks.interact.fastbow.Fastbow;
 import io.github.awesome90.crescent.detection.checks.movement.fly.Fly;
 import io.github.awesome90.crescent.detection.checks.movement.impossible.Impossible;
@@ -62,6 +63,7 @@ public class Profile {
 		checks.add(new Speed(this));
 		checks.add(new WaterWalk(this));
 		checks.add(new Killaura(this));
+		checks.add(new FastHeal(this));
 	}
 
 	public UUID getUUID() {

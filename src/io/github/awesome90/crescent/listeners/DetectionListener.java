@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -108,6 +109,17 @@ public class DetectionListener implements Listener {
 		final Player player = (Player) event.getEntity();
 
 		getCheckVersion(player, CheckType.FASTBOW, "A").call(event);
+	}
+
+	@EventHandler
+	public void onEntityRegainHealth(EntityRegainHealthEvent event) {
+		if (!(event.getEntity() instanceof Player)) {
+			return;
+		}
+
+		final Player player = (Player) event.getEntity();
+
+		getCheckVersion(player, CheckType.FASTHEAL, "A").call(event);
 	}
 
 	@EventHandler
