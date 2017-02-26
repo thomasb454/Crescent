@@ -10,6 +10,7 @@ public class Killaura extends Check {
 		super(profile, CheckType.KILLAURA);
 
 		versions.add(new KillauraA(this));
+		versions.add(new KillauraB(this));
 	}
 
 }
