@@ -8,6 +8,8 @@ public class Killaura extends Check {
 
 	public Killaura(Profile profile) {
 		super(profile, CheckType.KILLAURA);
+
+		versions.add(new KillauraA(this));
 	}
 
 }

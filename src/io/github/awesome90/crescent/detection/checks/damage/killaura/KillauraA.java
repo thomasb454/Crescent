@@ -15,8 +15,8 @@ public class KillauraA extends CheckVersion {
 
 	private ArrayList<FakePlayer> currentChecks;
 
-	public KillauraA(Check check, String checkVersion, String description) {
-		super(check, checkVersion, description);
+	public KillauraA(Check check) {
+		super(check, "A", "Uses fake players to detect killaura.");
 		this.currentChecks = new ArrayList<FakePlayer>();
 	}
 

@@ -1,6 +1,5 @@
 package io.github.awesome90.crescent.detection.checks.movement.speed;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 
 import com.comphenix.protocol.events.PacketContainer;
@@ -59,7 +58,6 @@ public class SpeedA extends CheckVersion {
 			final double expectedMovementSquared = (velX * velX) + (velY * velY) + (velZ * velZ);
 
 			final double difference = (movementSquared - expectedMovementSquared) * (checkTime * 20);
-			Bukkit.broadcastMessage(difference + "");
 			if (difference > 100.0) {
 				// The player is moving too quickly.
 				lastTime = -1.0; // Reset the timer.

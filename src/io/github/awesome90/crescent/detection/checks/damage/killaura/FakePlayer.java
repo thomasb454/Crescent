@@ -9,7 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.comphenix.packetwrapper.WrapperPlayServerEntityDestroy;
-import com.comphenix.packetwrapper.WrapperPlayerServerNamedEntitySpawn;
+import com.comphenix.packetwrapper.WrapperPlayServerNamedEntitySpawn;
 import com.comphenix.protocol.ProtocolManager;
 
 import io.github.awesome90.crescent.Crescent;
@@ -18,13 +18,13 @@ import io.github.awesome90.crescent.info.Profile;
 
 public class FakePlayer {
 
-	private Profile profile;
 	private boolean alive;
 	private final Random random;
-	private final String name;
 	private final UUID uuid;
 	private final int id;
 	private final ProtocolManager pm;
+
+	private final KillauraA killaura;
 
 	private int life;
 
@@ -43,26 +43,26 @@ public class FakePlayer {
 	 *            The players that the fake player should be visible to.
 	 */
 	public FakePlayer(Profile profile, int life, Player... players) {
-		this.profile = profile;
 		this.alive = false;
 		this.life = life;
 		this.random = new Random();
 		final Player randomPlayer = (Player) Bukkit.getOnlinePlayers().toArray()[random
 				.nextInt(Bukkit.getOnlinePlayers().size())];
-		this.name = randomPlayer.getName();
 		this.uuid = randomPlayer.getUniqueId();
 		this.id = random.nextInt(Integer.MAX_VALUE);
 		this.pm = Crescent.getInstance().getProtocolManager();
 		this.players = players;
+
+		this.killaura = (KillauraA) profile.getCheck(CheckType.KILLAURA).getCheckVersion("A");
 	}
 
 	public void spawn(Location location) {
-		WrapperPlayerServerNamedEntitySpawn spawn = new WrapperPlayerServerNamedEntitySpawn();
+		WrapperPlayServerNamedEntitySpawn spawn = new WrapperPlayServerNamedEntitySpawn();
 		spawn.setEntityID(id);
-		spawn.setPosition(location.toVector());
-		spawn.setPlayerUUID(uuid.toString());
-		spawn.setPlayerName(name);
+		spawn.setPlayerUUID(uuid);
 
+		spawn.setPosition(location.toVector());
+		
 		this.alive = true;
 
 		for (Player player : players) {
@@ -86,7 +86,7 @@ public class FakePlayer {
 
 	public void despawn() {
 		WrapperPlayServerEntityDestroy destroy = new WrapperPlayServerEntityDestroy();
-		destroy.setEntities(new int[] { id });
+		destroy.setEntityIds(new int[] { id });
 
 		this.alive = false;
 
@@ -98,12 +98,12 @@ public class FakePlayer {
 			}
 		}
 
-		KillauraA killaura = (KillauraA) profile.getCheck(CheckType.KILLAURA).getCheckVersion("A");
 		killaura.removeFakePlayer(this);
 	}
 
 	public void hit() {
 		despawn();
+		killaura.callback(true);
 	}
 
 	public void broadcastToWatchers(String message) {

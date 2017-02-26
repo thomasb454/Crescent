@@ -3,6 +3,7 @@ package io.github.awesome90.crescent.listeners;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -55,7 +56,7 @@ public class DetectionListener implements Listener {
 
 							if (packet.getIntegers().read(0) == 1) {
 								// 1 = attack.
-								
+
 							}
 						}
 					}
@@ -74,6 +75,17 @@ public class DetectionListener implements Listener {
 		getCheckVersion(player, CheckType.NOFALL, "A").call(event);
 
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
+	}
+
+	@EventHandler
+	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+		if (event.getEntity() instanceof Player) {
+			getCheckVersion((Player) event.getEntity(), CheckType.KILLAURA, "A").call(event);
+		}
+
+		if (event.getDamager() instanceof Player) {
+			getCheckVersion((Player) event.getDamager(), CheckType.KILLAURA, "A").call(event);
+		}
 	}
 
 	@EventHandler
