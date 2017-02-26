@@ -53,7 +53,7 @@ public class WaterWalkA extends CheckVersion {
 						startTime = System.currentTimeMillis();
 					}
 
-					if (System.currentTimeMillis() - startTime >= Crescent.getInstance().getConfig()
+					if (System.currentTimeMillis() - startTime > Crescent.getInstance().getConfig()
 							.getInt("waterwalk.a.walkTime")) {
 						callback(true);
 						startTime = -1;
