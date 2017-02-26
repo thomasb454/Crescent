@@ -16,6 +16,7 @@ import io.github.awesome90.crescent.detection.checks.damage.nofall.NoFall;
 import io.github.awesome90.crescent.detection.checks.health.fastheal.FastHeal;
 import io.github.awesome90.crescent.detection.checks.interact.fastbow.Fastbow;
 import io.github.awesome90.crescent.detection.checks.movement.fly.Fly;
+import io.github.awesome90.crescent.detection.checks.movement.highjump.HighJump;
 import io.github.awesome90.crescent.detection.checks.movement.impossible.Impossible;
 import io.github.awesome90.crescent.detection.checks.movement.speed.Speed;
 import io.github.awesome90.crescent.detection.checks.movement.waterwalk.WaterWalk;
@@ -54,6 +55,9 @@ public class Profile {
 		addChecks();
 	}
 
+	/**
+	 * Add the cheat checks so that they can be utilised.
+	 */
 	private void addChecks() {
 		checks.add(new Antiknockback(this));
 		checks.add(new NoFall(this));
@@ -64,6 +68,7 @@ public class Profile {
 		checks.add(new WaterWalk(this));
 		checks.add(new Killaura(this));
 		checks.add(new FastHeal(this));
+		checks.add(new HighJump(this));
 	}
 
 	public UUID getUUID() {

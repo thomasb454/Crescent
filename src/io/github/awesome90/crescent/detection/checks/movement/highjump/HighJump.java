@@ -8,6 +8,7 @@ public class HighJump extends Check {
 
 	public HighJump(Profile profile) {
 		super(profile, CheckType.HIGHJUMP);
+
 		versions.add(new HighJumpA(this));
 	}
 

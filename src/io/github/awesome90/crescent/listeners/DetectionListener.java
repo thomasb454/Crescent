@@ -1,5 +1,6 @@
 package io.github.awesome90.crescent.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +21,7 @@ import io.github.awesome90.crescent.Crescent;
 import io.github.awesome90.crescent.behaviour.Behaviour;
 import io.github.awesome90.crescent.detection.CheckType;
 import io.github.awesome90.crescent.detection.checks.CheckVersion;
+import io.github.awesome90.crescent.events.PlayerJumpEvent;
 import io.github.awesome90.crescent.info.Profile;
 
 public class DetectionListener implements Listener {
@@ -127,6 +129,15 @@ public class DetectionListener implements Listener {
 		final Player player = event.getPlayer();
 
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
+	}
+
+	@EventHandler
+	public void onPlayerJump(PlayerJumpEvent event) {
+		final Player player = event.getPlayer();
+
+		Bukkit.broadcastMessage("jumped");
+
+		getCheckVersion(player, CheckType.HIGHJUMP, "A").call(event);
 	}
 
 	private Profile getProfile(Player player) {

@@ -13,6 +13,10 @@ public class PlayerJumpEvent extends Event {
 		return handlers;
 	}
 
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
 	private final Player player;
 	private final double distance;
 

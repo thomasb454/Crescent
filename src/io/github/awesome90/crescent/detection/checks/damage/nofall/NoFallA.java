@@ -59,6 +59,14 @@ public class NoFallA extends CheckVersion {
 
 				final float fallDistance = player.getFallDistance();
 
+				if (fallDistance < 4) {
+					/*
+					 * The player has not fallen far enough to take any fall
+					 * damage.
+					 */
+					return;
+				}
+
 				final Behaviour behaviour = profile.getBehaviour();
 
 				// Check if player has moved from air to ground.
@@ -82,7 +90,6 @@ public class NoFallA extends CheckVersion {
 							@Override
 							public void run() {
 								if (player.getHealth() > expected) {
-									Bukkit.broadcastMessage("expected: " + expected + " actual: " + player.getHealth());
 									callback(true);
 								}
 							}

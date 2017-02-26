@@ -3,6 +3,7 @@ package io.github.awesome90.crescent.behaviour;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import io.github.awesome90.crescent.info.Profile;
@@ -87,11 +88,19 @@ public class Behaviour {
 	}
 
 	public final boolean isOnLadder() {
-		return false; // Change this!
+		return getBlockPlayerIsIn().getType() == Material.LADDER;
+	}
+
+	public final boolean isOnVine() {
+		return getBlockPlayerIsIn().getType() == Material.VINE;
 	}
 
 	public final boolean isOnLiquidBlock() {
 		return getBlockUnderPlayer().isLiquid();
+	}
+
+	public final boolean isOnGround() {
+		return ((Entity) getPlayer()).isOnGround();
 	}
 
 	public final Block getBlockPlayerIsIn() {
