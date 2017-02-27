@@ -51,16 +51,18 @@ public class NoFallA extends CheckVersion {
 
 			if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
 
-				if (lastY == -1.0 && profile.getBehaviour().isDescending()) {
-					lastY = player.getLocation().getY();
-				}
-
 				final float fallDistance = player.getFallDistance();
 
-				if (fallDistance < 4) {
+				// Make sure the player has actually fallen.
+				if (fallDistance > 0.0 && lastY == -1.0) {
+					lastY = player.getLocation().getY();
+					return;
+				}
+
+				if (fallDistance < 4.0) {
 					/*
-					 * The player has not fallen far enough to take any fall
-					 * damage.
+					 * The player has fallen, but not far enough to take any
+					 * fall damage.
 					 */
 					return;
 				}

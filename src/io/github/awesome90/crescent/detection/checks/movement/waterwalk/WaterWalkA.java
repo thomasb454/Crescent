@@ -34,7 +34,7 @@ public class WaterWalkA extends CheckVersion {
 			final GameMode mode = profile.getPlayer().getGameMode();
 
 			if ((mode != GameMode.CREATIVE && mode != GameMode.SPECTATOR) && behaviour.isOnLiquidBlock()
-					&& !behaviour.isInWater() && (!behaviour.isDescending() || !behaviour.isAscending())) {
+					&& !behaviour.isInWater()) {
 				/*
 				 * Do not execute this statement if the player is not descending
 				 * (this could lead to false positives) and if the player is in

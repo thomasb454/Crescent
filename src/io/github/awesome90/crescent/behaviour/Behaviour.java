@@ -48,14 +48,6 @@ public class Behaviour {
 		return jumping;
 	}
 
-	public final boolean isAscending() {
-		return getPlayer().getVelocity().getY() > 0;
-	}
-
-	public final boolean isDescending() {
-		return getPlayer().getVelocity().getY() < 0;
-	}
-
 	public final boolean isInWater() {
 		Material in = getBlockPlayerIsIn().getType();
 		return in == Material.WATER || in == Material.STATIONARY_WATER;
@@ -85,8 +77,16 @@ public class Behaviour {
 		return getPlayer().getLocation().getBlock();
 	}
 
+	public final Block getBlockAbovePlayer() {
+		return getBlockOnFace(BlockFace.UP);
+	}
+
 	public final Block getBlockUnderPlayer() {
-		return getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN);
+		return getBlockOnFace(BlockFace.DOWN);
+	}
+
+	public final Block getBlockOnFace(BlockFace face) {
+		return getPlayer().getLocation().getBlock().getRelative(face);
 	}
 
 	public final double getEPF(int level, double typeModifier) {

@@ -23,13 +23,14 @@ public class DetectionListener implements Listener {
 		final Player player = event.getPlayer();
 
 		getCheckVersion(player, CheckType.FLY, "A").call(event);
-		getCheckVersion(player, CheckType.FLY, "B").call(event);
 
 		getCheckVersion(player, CheckType.WATERWALK, "A").call(event);
 
 		getCheckVersion(player, CheckType.NOFALL, "A").call(event);
 
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
+		
+		getCheckVersion(player, CheckType.TIMER, "A").call(event);
 	}
 
 	@EventHandler
@@ -42,7 +43,9 @@ public class DetectionListener implements Listener {
 		if (event.getDamager() instanceof Player) {
 			final Player player = (Player) event.getDamager();
 			getCheckVersion(player, CheckType.CRITICALS, "A").call(event);
+
 			getCheckVersion(player, CheckType.KILLAURA, "A").call(event);
+			getCheckVersion(player, CheckType.KILLAURA, "B").call(event);
 		}
 	}
 
