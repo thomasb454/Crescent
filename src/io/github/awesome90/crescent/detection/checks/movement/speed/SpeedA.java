@@ -9,6 +9,10 @@ import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
 public class SpeedA extends CheckVersion {
 
+	/*
+	* This check is broken. I need to recode it.
+	*/
+	
 	private static final int checkTime = 5;
 
 	private double lastTime;
