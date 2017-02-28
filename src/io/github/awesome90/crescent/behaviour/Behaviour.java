@@ -5,6 +5,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import io.github.awesome90.crescent.info.Profile;
 
@@ -87,6 +89,16 @@ public class Behaviour {
 
 	public final Block getBlockOnFace(BlockFace face) {
 		return getPlayer().getLocation().getBlock().getRelative(face);
+	}
+
+	public final int getPotionEffectLevel(PotionEffectType type) {
+		for (PotionEffect effect : getPlayer().getActivePotionEffects()) {
+			if (effect.getType().equals(type)) {
+				return effect.getAmplifier();
+			}
+		}
+
+		return 0;
 	}
 
 	public final double getEPF(int level, double typeModifier) {

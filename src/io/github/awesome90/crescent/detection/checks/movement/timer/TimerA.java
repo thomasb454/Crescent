@@ -40,7 +40,7 @@ public class TimerA extends CheckVersion {
 				// The amount of movement packets being sent each second.
 				double pps = (count / (difference * 1000.0)) / 5.0;
 
-				Bukkit.broadcastMessage(Math.ceil(pps) + "");
+				// Bukkit.broadcastMessage(Math.ceil(pps) + "");
 
 				count = 0;
 			}

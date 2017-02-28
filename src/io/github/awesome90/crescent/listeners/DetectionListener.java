@@ -22,6 +22,8 @@ public class DetectionListener implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event) {
 		final Player player = event.getPlayer();
 
+		getCheckVersion(player, CheckType.SPEED, "A").call(event);
+
 		getCheckVersion(player, CheckType.FLY, "A").call(event);
 
 		getCheckVersion(player, CheckType.WATERWALK, "A").call(event);
@@ -29,7 +31,7 @@ public class DetectionListener implements Listener {
 		getCheckVersion(player, CheckType.NOFALL, "A").call(event);
 
 		getCheckVersion(player, CheckType.SNEAK, "A").call(event);
-		
+
 		getCheckVersion(player, CheckType.TIMER, "A").call(event);
 	}
 
