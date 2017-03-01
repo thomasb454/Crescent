@@ -1,5 +1,7 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -18,12 +20,15 @@ public class KillauraB extends CheckVersion {
 		if (event instanceof EntityDamageByEntityEvent) {
 			EntityDamageByEntityEvent edbe = (EntityDamageByEntityEvent) event;
 
-			double angle = profile.getPlayer().getLocation().toVector()
-					.angle(edbe.getEntity().getLocation().toVector());
+			final Location playerLoc = profile.getPlayer().getLocation();
+			final Location damagedLoc = edbe.getEntity().getLocation();
 
-			if (angle > 90) {
-				callback(true);
-			}
+			final double diffX = Math.abs(playerLoc.getX() - damagedLoc.getX()),
+					diffZ = Math.abs(playerLoc.getZ() - damagedLoc.getZ());
+
+			final double angle = Math.tan(diffX / diffZ);
+
+			Bukkit.broadcastMessage("angle: " + angle);
 		}
 	}
 

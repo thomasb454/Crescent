@@ -62,7 +62,7 @@ public class FakePlayer {
 		spawn.setPlayerUUID(uuid);
 
 		spawn.setPosition(location.toVector());
-		
+
 		this.alive = true;
 
 		for (Player player : players) {

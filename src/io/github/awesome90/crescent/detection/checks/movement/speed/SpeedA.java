@@ -36,10 +36,11 @@ public class SpeedA extends CheckVersion {
 			double speed = to.distanceSquared(from);
 
 			if (speedLevel > 0) {
-				speed -= (speed / 100.0) / (speedLevel * 20.0);
+				// Take into account speed potions.
+				speed -= (speed / 100.0) * (speedLevel * 20.0);
 			}
 
-			if (speed > 50.0) {
+			if (speed > 0.40) {
 				callback(true);
 			}
 		}
