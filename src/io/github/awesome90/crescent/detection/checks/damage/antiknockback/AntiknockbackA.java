@@ -158,7 +158,6 @@ public class AntiknockbackA extends CheckVersion {
 			return;
 		}
 
-		Bukkit.broadcastMessage(checkCurrentCertainty() + "");
 		if (checkCurrentCertainty() > 45 && super.totalCalls >= 10) {
 			callback(true);
 		}

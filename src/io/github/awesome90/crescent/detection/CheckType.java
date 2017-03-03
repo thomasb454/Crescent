@@ -1,5 +1,7 @@
 package io.github.awesome90.crescent.detection;
 
+import org.bukkit.configuration.file.FileConfiguration;
+
 import io.github.awesome90.crescent.Crescent;
 
 public enum CheckType {
@@ -10,21 +12,31 @@ public enum CheckType {
 	/**
 	 * The user-friendly name of the check.
 	 */
-	private String name;
+	private final String name;
 	/**
 	 * The suggested, default, value for cheatConsider;
 	 */
-	private int normalCheatConsider;
+	private final int normalCheatConsider;
 	/**
 	 * The number of checks that need to be set off for the player to fully be
 	 * considered cheating.
 	 */
-	private int cheatConsider;
+	private final int cheatConsider;
+
+	/**
+	 * Whether the player should be prevented from performing an action (e.g.
+	 * teleported back).
+	 */
+	private final boolean prevent;
 
 	private CheckType(String name, int normalCheatConsider) {
 		this.name = name;
 		this.normalCheatConsider = normalCheatConsider;
-		this.cheatConsider = getCheatConsiderPoints(name);
+
+		final FileConfiguration fc = Crescent.getInstance().getConfig();
+
+		this.cheatConsider = fc.getInt(name + ".cheatConsider");
+		this.prevent = fc.getBoolean(name + ".prevent");
 	}
 
 	public String getName() {
@@ -39,14 +51,7 @@ public enum CheckType {
 		return cheatConsider;
 	}
 
-	/**
-	 * @param name
-	 *            The name of the check that you want to retrieve the
-	 *            information from.
-	 * @return The amount of points needed to fully consider a player cheating
-	 *         for a particular CheckType.
-	 */
-	private static int getCheatConsiderPoints(String name) {
-		return Crescent.getInstance().getConfig().getInt(name.toLowerCase() + ".cheatConsider");
+	public boolean shouldPrevent() {
+		return prevent;
 	}
 }

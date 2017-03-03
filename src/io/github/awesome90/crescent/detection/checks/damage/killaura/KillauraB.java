@@ -1,8 +1,10 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.util.Vector;
 
 import io.github.awesome90.crescent.detection.checks.Check;
@@ -20,13 +22,18 @@ public class KillauraB extends CheckVersion {
 		if (event instanceof EntityDamageByEntityEvent) {
 			EntityDamageByEntityEvent edbe = (EntityDamageByEntityEvent) event;
 
-			final Player player = profile.getPlayer();
-			final Vector compare = edbe.getEntity().getLocation().toVector().subtract(player.getLocation().toVector())
-					.normalize();
-			final Vector eyeCompare = player.getEyeLocation().toVector().subtract(player.getLocation().toVector())
-					.normalize();
+			if (edbe.getCause() != DamageCause.ENTITY_ATTACK) {
+				return;
+			}
 
-			final double angle = Math.toDegrees(compare.angle(eyeCompare));
+			final Player player = profile.getPlayer();
+
+			final Vector direction = player.getLocation().getDirection().normalize();
+			final Vector target = edbe.getEntity().getLocation().toVector().normalize();
+
+			double angle = Math.toDegrees(direction.angle(target));
+
+			Bukkit.broadcastMessage("angle: " + angle);
 		}
 	}
 

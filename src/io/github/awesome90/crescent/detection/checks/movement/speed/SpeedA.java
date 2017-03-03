@@ -1,5 +1,7 @@
 package io.github.awesome90.crescent.detection.checks.movement.speed;
 
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffectType;
@@ -17,6 +19,17 @@ public class SpeedA extends CheckVersion {
 	@Override
 	public void call(Event event) {
 		if (event instanceof PlayerMoveEvent) {
+			final Player player = profile.getPlayer();
+
+			if (player.getGameMode() == GameMode.SPECTATOR) {
+				/*
+				 * If the player is in spectator mode, return out of the method
+				 * as the speed function in this game mode could cause false
+				 * positives.
+				 */
+				return;
+			}
+
 			final PlayerMoveEvent pme = (PlayerMoveEvent) event;
 
 			final int speedLevel = profile.getBehaviour().getPotionEffectLevel(PotionEffectType.SPEED);

@@ -48,7 +48,9 @@ public class Crescent extends JavaPlugin {
 	private void loadConfig() {
 
 		for (CheckType type : CheckType.values()) {
-			this.getConfig().set(type.getName().toLowerCase() + ".cheatConsider", type.getNormalCheatConsider());
+			final String name = type.getName().toLowerCase();
+			this.getConfig().set(name + ".cheatConsider", type.getNormalCheatConsider());
+			this.getConfig().set(name + ".prevent", true);
 		}
 
 		// Fly check values.

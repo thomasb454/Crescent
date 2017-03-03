@@ -18,7 +18,7 @@ public class CriticalsA extends CheckVersion {
 	@Override
 	public void call(Event event) {
 		if (event instanceof EntityDamageByEntityEvent) {
-			if (canDealCritical() && profile.getBehaviour().getBlockUnderPlayer().getType().isSolid()) {
+			if (!canDealCritical() && profile.getBehaviour().getBlockUnderPlayer().getType().isSolid()) {
 				// This is not a valid critical hit.
 				callback(true);
 			}

@@ -1,6 +1,5 @@
 package io.github.awesome90.crescent.detection.checks.movement.timer;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 
