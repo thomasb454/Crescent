@@ -25,7 +25,7 @@ public class FlyA extends CheckVersion {
 			if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR
 					&& !player.getAllowFlight()) {
 				final PlayerMoveEvent pme = (PlayerMoveEvent) event;
-
+				
 				final double distanceSquared = pme.getTo().toVector().distanceSquared(pme.getFrom().toVector());
 
 				/*
