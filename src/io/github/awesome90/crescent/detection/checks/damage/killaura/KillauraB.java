@@ -40,6 +40,7 @@ public class KillauraB extends CheckVersion {
 	 * @param check
 	 *            The entity to check whether
 	 * @param distance
+	 *            The difference in distance to allow for.
 	 * @return
 	 */
 	private boolean isInLineOfSight(Entity check, double distance) {

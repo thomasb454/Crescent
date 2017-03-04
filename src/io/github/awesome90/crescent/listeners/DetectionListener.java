@@ -49,6 +49,8 @@ public class DetectionListener implements Listener {
 			getCheckVersion(player, CheckType.KILLAURA, "A").call(event);
 
 			getCheckVersion(player, CheckType.KILLAURA, "B").call(event);
+
+			getCheckVersion(player, CheckType.KILLAURA, "C").call(event);
 		}
 	}
 
