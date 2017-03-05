@@ -12,6 +12,7 @@ public class Killaura extends Check {
 		versions.add(new KillauraA(this));
 		versions.add(new KillauraB(this));
 		versions.add(new KillauraC(this));
+		versions.add(new KillauraD(this));
 	}
 
 }

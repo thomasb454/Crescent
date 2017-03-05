@@ -1,8 +1,7 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
-import java.util.ArrayList;
-
-import org.bukkit.Location;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -11,40 +10,55 @@ import io.github.awesome90.crescent.detection.checks.CheckVersion;
 
 public class KillauraA extends CheckVersion {
 
-	private ArrayList<FakePlayer> currentChecks;
+	/**
+	 * The amount of hits that the player has made.
+	 */
+	private long hits;
+	/**
+	 * The time that the hits started being counted from.
+	 */
+	private long lastRecord;
 
 	public KillauraA(Check check) {
-		super(check, "A", "Uses fake players to detect killaura.");
-		this.currentChecks = new ArrayList<FakePlayer>();
-	}
-
-	public void addFakePlayer(FakePlayer player) {
-		currentChecks.add(player);
-	}
-
-	public void removeFakePlayer(FakePlayer player) {
-		currentChecks.remove(player);
+		super(check, "A", "This checks the frequency of attacks that a player is making.");
+		this.hits = lastRecord = 0;
 	}
 
 	@Override
 	public void call(Event event) {
 		if (event instanceof EntityDamageByEntityEvent) {
-			// Spawn a fake player behind the player.
-			spawnFakePlayer(profile.getPlayer().getLocation().toVector().multiply(-1).normalize()
-					.toLocation(profile.getPlayer().getWorld()));
+			final EntityDamageByEntityEvent edbe = (EntityDamageByEntityEvent) event;
+
+			if (lastRecord == 0 || System.currentTimeMillis() - lastRecord >= 5000) {
+				reset();
+			}
+
+			hits++;
+
+			final double hitsPerSecond = getHitsPerSecond();
+
+			Bukkit.broadcastMessage(ChatColor.AQUA + "" + hitsPerSecond);
 		}
-	}
-
-	public void spawnFakePlayer(Location location) {
-		final FakePlayer fake = new FakePlayer(profile, 2);
-		fake.spawn(location);
-
-		currentChecks.add(fake);
 	}
 
 	@Override
 	public double checkCurrentCertainty() {
 		return 0;
+	}
+
+	/**
+	 * Reset the hits count and set the lastRecord variable to the current time.
+	 */
+	private void reset() {
+		this.hits = 0;
+		this.lastRecord = System.currentTimeMillis();
+	}
+
+	/**
+	 * @return The amount of hits that a player makes per second.
+	 */
+	private double getHitsPerSecond() {
+		return hits / ((System.currentTimeMillis() - lastRecord) * 1000.0);
 	}
 
 }

@@ -1,6 +1,8 @@
 package io.github.awesome90.crescent.detection.checks.damage.killaura;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -16,13 +18,26 @@ public class KillauraC extends CheckVersion {
 	@Override
 	public void call(Event event) {
 		if (event instanceof EntityDamageByEntityEvent) {
-			EntityDamageByEntityEvent edbe = (EntityDamageByEntityEvent) event;
+			final EntityDamageByEntityEvent edbe = (EntityDamageByEntityEvent) event;
 
-			final float playerYaw = profile.getPlayer().getEyeLocation().getYaw();
-			final float targetYaw = edbe.getEntity().getLocation().getYaw();
-			final double difference = Math.abs(playerYaw - targetYaw);
+			if (!(edbe.getEntity() instanceof LivingEntity)) {
+				return;
+			}
 
-			Bukkit.broadcastMessage(difference + "");
+			LivingEntity le = (LivingEntity) edbe.getEntity();
+
+			final double playerYaw = profile.getPlayer().getEyeLocation().getYaw();
+			final double targetYaw = le.getEyeLocation().getYaw();
+
+			double expected;
+
+			if (playerYaw < 0) {
+				expected = playerYaw + 180;
+			} else {
+				expected = playerYaw - 180;
+			}
+
+			Bukkit.broadcastMessage(ChatColor.GREEN + "expected: " + expected + ", actual: " + targetYaw);
 		}
 	}
 
