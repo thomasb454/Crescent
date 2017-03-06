@@ -51,39 +51,44 @@ public class NoFallA extends CheckVersion {
 
 			if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
 
-				final float fallDistance = player.getFallDistance();
+				final Material from = pme.getFrom().getBlock().getRelative(BlockFace.DOWN).getType();
+				final Material to = pme.getTo().getBlock().getRelative(BlockFace.DOWN).getType();
 
-				// Make sure the player has actually fallen.
-				if (fallDistance > 0.0 && lastY == -1.0) {
+				if (to == Material.AIR) {
 					lastY = player.getLocation().getY();
 					return;
 				}
 
-				if (fallDistance < 4.0) {
-					/*
-					 * The player has fallen, but not far enough to take any
-					 * fall damage.
-					 */
-					return;
-				}
+				float fallDistance = player.getFallDistance();
+
+				// if (fallDistance < 4.0) {
+				// /*
+				// * The player has fallen, but not far enough to take any
+				// * fall damage.
+				// */
+				// return;
+				// }
+
+				Bukkit.broadcastMessage("from: " + from.toString() + ", to: " + to.toString());
+
+				// The player has fallen far enough to take damage.
 
 				final Behaviour behaviour = profile.getBehaviour();
 
 				// Check if player has moved from air to ground.
-				final Material from = pme.getFrom().getBlock().getRelative(BlockFace.DOWN).getType();
-				final Material to = pme.getTo().getBlock().getRelative(BlockFace.DOWN).getType();
+				if (from == Material.AIR && to != Material.AIR) {
 
-				if (from == Material.AIR && to.isSolid()) {
 					if (!behaviour.isInWater() && !behaviour.isInWeb() && !player.isInsideVehicle()
 							&& !player.isSleeping()) {
 						final double expected = Math.max(player.getHealth() - getExpectedDamage(profile, fallDistance),
 								0);
-
 						/*
 						 * Reset the lastY value. The player is now on the
 						 * ground.
 						 */
 						lastY = -1.0;
+
+						Bukkit.broadcastMessage("expected: " + expected + ", actual: " + player.getHealth());
 
 						Bukkit.getScheduler().runTaskLater(Crescent.getInstance(), new Runnable() {
 
@@ -149,12 +154,13 @@ public class NoFallA extends CheckVersion {
 			if (boots.containsEnchantment(Enchantment.PROTECTION_FALL)) {
 				final int level = boots.getEnchantmentLevel(Enchantment.PROTECTION_FALL);
 				// 2.5 is the type modifier for feather falling.
-				epf += (6 + level * level) * 2.5 / 3;
+				epf += getEPFExtra(level, 2.5);
 			}
 
 			if (boots.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
 				final int level = boots.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-				epf += (6 + level * level) * 0.75 / 3;
+				// 0.75 is the type modifier for protection.
+				epf += getEPFExtra(level, 0.75);
 			}
 
 			// Cap the EPF at 20.
@@ -174,6 +180,10 @@ public class NoFallA extends CheckVersion {
 
 		// The maths just works, ok? :D
 		return damage - enchantmentReduction - potionReduction - 1;
+	}
+
+	private double getEPFExtra(int level, double typeModifier) {
+		return (6 + level * level) * typeModifier / 3.0;
 	}
 
 }

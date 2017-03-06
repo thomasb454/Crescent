@@ -37,7 +37,8 @@ public class KillauraD extends CheckVersion {
 			final double expectedDistance = round(
 					Math.abs(Math.abs(playerEye.getY() - target.getY()) / Math.sin(Math.abs(playerEye.getPitch()))));
 
-			Bukkit.broadcastMessage("expected: " + expectedDistance + " actual: " + distance);
+			Bukkit.broadcastMessage(
+					"expected: " + expectedDistance + " actual: " + distance + " yaw: " + playerEye.getYaw());
 		}
 	}
 
